@@ -13,25 +13,15 @@
 -- You should have received a copy of the GNU General Public License
 -- along with this program; if not, write to the Free Software
 -- Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-AgroMessages = {}
-AgroMessages.SpMsgCount = 5
+as = {}
+as.utils = {}
+
+function as.utils.getText(key)
+	local text = g_i18n:getText(key);
 	
-function AgroMessages:show(reward)
-	local msgTitle = 'AgroSponsors'
-	local msgTxt = ''
+	-- Format CR LF Chars
+	text = string.gsub(text, '/CR', '\r');
+	text = string.gsub(text, '/LF', '\n');
 	
-	local rndIndex = math.random(1, AgroMessages.SpMsgCount);
-	local curIndex = 0;
-	
-	for curIndex=1,AgroMessages.SpMsgCount do
-		if rndIndex == curIndex then
-			local key = 'AGROSPONSOR_SP' .. curIndex;			
-			msgTxt =  as.utils.getText(key);
-			break;				
-		end
-	end;
-	
-	msgTxt = msgTxt:format(g_i18n:formatMoney(reward));
-	
-	g_currentMission.inGameMessage:showMessage(msgTitle, msgTxt, 15000, false);
+	return text;
 end 

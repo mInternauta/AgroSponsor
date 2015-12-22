@@ -2,10 +2,10 @@
 <l10n>
 	<!-- TEMPORARY TRANSLATION FOR de -->
 	<texts>
-		<text name="AGROSPONSOR_SP1" text="In partnership with JCB, ITRunner, Case, New Holland and other companies. \n The AgroSponsor offers you a sponsorship of %s for the purchase of equipment and tools! We hope your success with the AgroSponsor and Partners! " />
-		<text name="AGROSPONSOR_SP2" text="In exclusive partnership with JCB. \n The AgroSponsor gives you a sponsorship of %s for the purchase of equipment and tools!" />
-		<text name="AGROSPONSOR_SP3" text="In exclusive partnership with ITRunner. \n The AgroSponsor gives you a sponsorship of %s for the purchase of equipment and tools!" />
-		<text name="AGROSPONSOR_SP4" text="In exclusive partnership with Case. \n The AgroSponsor gives you a sponsorship of %s for the purchase of equipment and tools!" />
-		<text name="AGROSPONSOR_SP5" text="New Holland offers you an exclusive sponsorship of %s for the purchase of equipment and tools! \n We hope your success with the AgroSponsor and Partners!" />
+		<text name="AGROSPONSOR_SP1" text="In partnership with JCB, ITRunner, Case, New Holland and other companies. /LF The AgroSponsor offers you a sponsorship of %s for the purchase of equipment and tools!/LF We hope your success with the AgroSponsor and Partners! " />
+		<text name="AGROSPONSOR_SP2" text="In exclusive partnership with JCB. /LF The AgroSponsor gives you a sponsorship of %s for the purchase of equipment and tools!" />
+		<text name="AGROSPONSOR_SP3" text="In exclusive partnership with ITRunner. /LF The AgroSponsor gives you a sponsorship of %s for the purchase of equipment and tools!" />
+		<text name="AGROSPONSOR_SP4" text="In exclusive partnership with Case. /LF The AgroSponsor gives you a sponsorship of %s for the purchase of equipment and tools!" />
+		<text name="AGROSPONSOR_SP5" text="New Holland offers you an exclusive sponsorship of %s for the purchase of equipment and tools! /LF We hope your success with the AgroSponsor and Partners!" />
 	</texts>
 </l10n>

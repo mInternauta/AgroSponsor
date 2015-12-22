@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <l10n>
 	<texts>
-		<text name="AGROSPONSOR_SP1" text="Em parceria com  JCB, ITRunner, Case, New Holland e outras empresas. \n A AgroSponsor oferece a voce um patrocinio de %s para a compra de equipamentos e ferramentas! Esperamos o seu sucesso junto a AgroSponsor e Parceiros! " />
-		<text name="AGROSPONSOR_SP2" text="Em parceria exclusiva com a JCB. \n A AgroSponsor oferece a voce um patrocinio de %s para a compra de equipamentos e ferramentas!" />
-		<text name="AGROSPONSOR_SP3" text="Patrocinio Exclusico com a ITRunner. \n A AgroSponsor oferece a voce um patrocinio de %s para a compra de equipamentos e ferramentas!" />
-		<text name="AGROSPONSOR_SP4" text="Patrocinio Exclusico com a Case. \n A AgroSponsor oferece a voce um patrocinio de %s para a compra de equipamentos e ferramentas!" />
-		<text name="AGROSPONSOR_SP5" text="New Holland oferece a voce um patrocinio exclusivo de %s para a compra de equipamentos e ferramentas! \n Esperamos o seu sucesso junto a AgroSponsor e Parceiros!" />
+		<text name="AGROSPONSOR_SP1" text="Em parceria com  JCB, ITRunner, Case, New Holland e outras empresas. /LF A AgroSponsor oferece a voce um patrocinio de %s para a compra de equipamentos e ferramentas! /LF Esperamos o seu sucesso junto a AgroSponsor e Parceiros! " />
+		<text name="AGROSPONSOR_SP2" text="Em parceria exclusiva com a JCB. /LF A AgroSponsor oferece a voce um patrocinio de %s para a compra de equipamentos e ferramentas!" />
+		<text name="AGROSPONSOR_SP3" text="Patrocinio Exclusivo com a ITRunner. /LF A AgroSponsor oferece a voce um patrocinio de %s para a compra de equipamentos e ferramentas!" />
+		<text name="AGROSPONSOR_SP4" text="Patrocinio Exclusivo com a Case. /LF A AgroSponsor oferece a voce um patrocinio de %s para a compra de equipamentos e ferramentas!" />
+		<text name="AGROSPONSOR_SP5" text="New Holland oferece a voce um patrocinio exclusivo de %s para a compra de equipamentos e ferramentas! /LF Esperamos o seu sucesso junto a AgroSponsor e Parceiros!" />
 	</texts>
 </l10n>
 

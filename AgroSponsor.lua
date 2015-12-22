@@ -25,11 +25,11 @@ MinSponsorMoney = 5000
 MaxSponsorMoney = 875050
 
 -- the possibility (a percentage) of the player receives a sponsorship in the day.
-SponsorChance = 20
+SponsorChance = 15
 
 -- Load the Messages
 source(AgroSponsor.ModInstallDir .. 'Messages.lua')
-AgroMessages:load();
+source(AgroSponsor.ModInstallDir .. 'Utils.lua')
 
 function AgroSponsor:asCreateID() 
 	local spFile = io.open(AgroSponsor.firstLoadFile, 'w')
