@@ -24,9 +24,10 @@
 	of AgroSponsors and its partners to purchase equipment and tools.]]>
 		</de>   
 		<br>
-<![CDATA[This mod adds a sponsors for your farm, 
-	every day in the morning you have the chance to win a sponsorship 
-	of AgroSponsors and its partners to purchase equipment and tools.]]>
+<![CDATA[Este mod adiciona patrocionadores para a sua fazenda, 
+	Todo dia de manha você tem a chance de ganhar um patrocinio da
+	AgroSponsors e Parceiros para a compra de equipamentos e ferramentas novas!]]>
 		</br>   
     </description>
+	<l10n filenamePrefix="translations/translation" />
 </modDesc>

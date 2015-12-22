@@ -27,6 +27,10 @@ MaxSponsorMoney = 875050
 -- the possibility (a percentage) of the player receives a sponsorship in the day.
 SponsorChance = 20
 
+-- Load the Messages
+source(AgroSponsor.ModInstallDir .. 'Messages.lua')
+AgroMessages:load();
+
 function AgroSponsor:asCreateID() 
 	local spFile = io.open(AgroSponsor.firstLoadFile, 'w')
 	
@@ -62,9 +66,7 @@ function AgroSponsor:asSpinReward()
 		
 		g_currentMission:addSharedMoney(reward, 'Sponsors');
 		
-		local msgTitle = 'AgroSponsors'
-		local msgTxt = 'In association with JCB, ITRunner, Case, New Holland among others. \nAgroSponsor offers you a sponsorship of ' .. ('%s'):format(g_i18n:formatMoney(reward)) ..' for equipment and tools! \nHopefully you get success with our products!'
-		g_currentMission.inGameMessage:showMessage(msgTitle, msgTxt, 15000, false);
+		AgroMessages:show(reward);
 	else 
 		print('[AgroSponsors] Not this time baby ' .. chance);
 	end 
