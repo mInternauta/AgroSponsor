@@ -27,9 +27,10 @@ MaxSponsorMoney = 875050
 -- the possibility (a percentage) of the player receives a sponsorship in the day.
 SponsorChance = 15
 
--- Load the Messages
+-- Load the Depedencies
 source(AgroSponsor.ModInstallDir .. 'Messages.lua')
 source(AgroSponsor.ModInstallDir .. 'Utils.lua')
+source(AgroSponsor.ModInstallDir .. 'hudSponsors.lua')
 
 function AgroSponsor:asCreateID() 
 	local spFile = io.open(AgroSponsor.firstLoadFile, 'w')
@@ -74,7 +75,7 @@ end
 
 function AgroSponsor:loadMap(name)
 	print('[AgroSponsor] Loading ')
-
+	
 	-- Check for the Savegame Directory
 	if g_server ~= nil then
 		local savegameDir;
@@ -101,6 +102,15 @@ function AgroSponsor:loadMap(name)
 	print('[AgroSponsor] Save directory ' .. self.saveGameDir);
 	print('[AgroSponsor] Save file ' .. AgroSponsor.firstLoadFile);
 	
+	-- Load the Sponsor Huds
+	hudSponsors:init();
+	
+	-- Initialize the mouse cursor
+	asMouseHud:init();
+	
+	-- Add huds to event listener 
+	addModEventListener(hudSponsors);
+	
 	-- Check if is the first time	
 	if fileExists(self.firstLoadFile) then 
 		self.firstLoad = 0
@@ -110,7 +120,7 @@ function AgroSponsor:loadMap(name)
 		self.firstLoad = 1
 		
 		-- Try create the file 
-		self.asCreateID();
+		self:asCreateID();
 	end 
 	
 	print('[AgroSponsor] Loaded ')
@@ -119,7 +129,7 @@ end;
 function AgroSponsor:update(dt)
 	-- If is first load, try and the file no exists try to create 
 	if self.firstLoad == 1 and self.gameIsSaved == 0 then 
-		self.asCreateID();
+		self:asCreateID();
 	end
 	
 	if g_currentMission.environment.isSunOn == false and self.isNight == false then
@@ -128,12 +138,22 @@ function AgroSponsor:update(dt)
 	elseif self.isNight == true and g_currentMission.environment.isSunOn == true then 
 		print('[AgroSponsor] Is sunset baby, lets roll!');
 		self.isNight = false;
-		self.asSpinReward();
+		
+		-- TODO: Is Sunset Roll the Sponsor Reward Spin
+		-- TODO: Send the daily sponsorship to the player
 	end
 	
-	if self.firstLoad == 1 and self.gameIsSaved == 1 then
-		self.asSpinReward();
+	if self.firstLoad == 1 and self.gameIsSaved == 1 then		
+		-- TODO: Give the first load reward
 	end 
+	
+	if self.gameIsSaved == 1 then
+		-- Check if the player has a sponsor already
+		if not AgroSpManager:hasSponsorSelected() and hudSponsors:isVisible() == false then 
+			-- Render the Selection Hud 			
+			hudSponsors:show();
+		end 
+	end 	
 end; 
 
 function AgroSponsor:keyEvent(unicode, sym, modifier, isDown)

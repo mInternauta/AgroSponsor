@@ -6,6 +6,9 @@
 		<text name="AGROSPONSOR_SP3" text="Patrocinio Exclusivo com a ITRunner. /LF A AgroSponsor oferece a voce um patrocinio de %s para a compra de equipamentos e ferramentas!" />
 		<text name="AGROSPONSOR_SP4" text="Patrocinio Exclusivo com a Case. /LF A AgroSponsor oferece a voce um patrocinio de %s para a compra de equipamentos e ferramentas!" />
 		<text name="AGROSPONSOR_SP5" text="New Holland oferece a voce um patrocinio exclusivo de %s para a compra de equipamentos e ferramentas! /LF Esperamos o seu sucesso junto a AgroSponsor e Parceiros!" />
+		<text name="AGROSPONSOR_CHOOSESP" text="Escolha o seu patrocionador:" />
+		<text name="AGROSPONSOR_HELPR" text="Premio maximo que voce pode concorrer todos os dias." />
+		<text name="AGROSPONSOR_HELPDSP" text="Valor do patrocinio diario que voce ira receber." />
 	</texts>
 </l10n>
 

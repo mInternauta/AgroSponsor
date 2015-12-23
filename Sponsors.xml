@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<Sponsors>
+	<Avaliable>
+		jcb|itrunner|newholland
+	</Avaliable>
+	<Items>
+		<jcb title="JCB" maxShip="1285" maxReward="95000" image="img/jcb.jpg" />
+		<itrunner  title="ITRunner" maxShip="1585" maxReward="85000" image="img/itrunner.jpg" />
+		<newholland title="New Holland" maxShip="1385" maxReward="98000" image="img/newholland.jpg" />
+	</Items>
+</Sponsors>

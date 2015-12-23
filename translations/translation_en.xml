@@ -6,5 +6,8 @@
 		<text name="AGROSPONSOR_SP3" text="In exclusive partnership with ITRunner. /LF The AgroSponsor gives you a sponsorship of %s for the purchase of equipment and tools!" />
 		<text name="AGROSPONSOR_SP4" text="In exclusive partnership with Case. /LF The AgroSponsor gives you a sponsorship of %s for the purchase of equipment and tools!" />
 		<text name="AGROSPONSOR_SP5" text="New Holland offers you an exclusive sponsorship of %s for the purchase of equipment and tools! /LF We hope your success with the AgroSponsor and Partners!" />
+		<text name="AGROSPONSOR_CHOOSESP" text="Choose your sponsor:" />
+		<text name="AGROSPONSOR_HELPR" text="Top prize that you can compete every day." />
+		<text name="AGROSPONSOR_HELPDSP" text="Daily sponsorship amount you will receive every day." />
 	</texts>
 </l10n>
