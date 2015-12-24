@@ -54,12 +54,15 @@ function hudSponsors:init(spList)
 	
 	-- set default visibility
 	self.visible = false;
+	self.isCancelled = false;
 end
  
 function hudSponsors:buildSponsors()
 	self.spOverlays = {}
 
 	local curId = 1;
+	local lineID = 1;
+	
 	for name, sponsor in pairs(self.sponsorList) do 
 		as.utils.printDebug('[hudSponsors] Building ' .. name);
 	
@@ -68,8 +71,8 @@ function hudSponsors:buildSponsors()
 		
 		local spOverlayH = hudSponsors.spImgRatio;
 		local spOverlayW = hudSponsors.spImgRatio;
-		local spOverlayX = hudSponsors.startPosX + (0.226 * (curId - 1));
-		local spOverlayY = hudSponsors.startPosY + (0.10 * (spLine - 1));
+		local spOverlayX = hudSponsors.startPosX + (0.228 * (lineID  - 1));
+		local spOverlayY = hudSponsors.startPosY - (0.252 * (spLine - 1));
 		
 		local spOvData = {}
 		spOvData['Overlay'] = spOverlay;
@@ -90,6 +93,11 @@ function hudSponsors:buildSponsors()
 		end
 		
 		curId = curId + 1;
+		lineID = lineID + 1;
+		
+		if lineID > hudSponsors.perLineSponsors then 
+			lineID = 1;
+		end 
 	end 
 end 
 
@@ -100,6 +108,10 @@ end
 function hudSponsors:show()
 	self.visible = true;
 end 
+
+function hudSponsors:getIsCancelled()
+	return self.isCancelled;
+end
 
 function hudSponsors:hide()
 	self.visible = false;
@@ -153,6 +165,8 @@ function hudSponsors:draw()
 		renderText(0.223, 0.846, 0.024, as.utils.getText('AGROSPONSOR_CHOOSESP')); -- TITLE
 		renderText(0.245, 0.171, 0.018, as.utils.getText('AGROSPONSOR_HELPDSP')); -- Help Reward
 		renderText(0.245, 0.135, 0.018, as.utils.getText('AGROSPONSOR_HELPR')); -- Help Daily Sponsorship
+		renderText(0.545, 0.135, 0.018, as.utils.getText('AGROSPONSOR_EXITKEY')); -- Quit
+		
 		
 		-- Enable the mouse 
 		asMouseHud:setEnabled(true);
@@ -166,6 +180,12 @@ function hudSponsors:loadMap(name)
 end;
 
 function hudSponsors:keyEvent(unicode, sym, modifier, isDown)
+	if sym == Input.KEY_q and isDown == true and self.visible then
+		-- User Cancelled the selection 
+		as.utils.printDebug('Player has canceled the sponsor selection');
+		self:hide();
+		self.isCancelled = true;
+	end;
 end;
 
 function hudSponsors:mouseEvent(posX, posY, isDown, isUp, button)

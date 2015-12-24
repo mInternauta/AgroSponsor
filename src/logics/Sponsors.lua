@@ -97,19 +97,19 @@ function AgroSpManager:buildSponsorList()
 	
 	for name, sponsor in pairs(AgroSpManager.sponsors) do 
 		local chance  = math.random(0, 10);
-		if chance <= 6 then 
+		if chance <= 7 then 
 			as.utils.printDebug('Selected Sponsor: ' .. name);
 			
 			local spData = sponsor;					
 			
 			-- Generate the Sponsor daily sponsorship
 			local maxSpShip = spData['MaxShip'];
-			local minSpShip = maxSpShip * 0.18;
+			local minSpShip = maxSpShip * 0.28;
 			local spShip = math.random(minSpShip, maxSpShip);
 			
 			-- Generate the sponsor complete reward
 			local maxSpReward = spData['MaxReward'];
-			local minSpReward = maxSpReward * 0.18;
+			local minSpReward = maxSpReward * 0.28;
 			local spReward = math.random(minSpReward, maxSpReward);
 			
 			-- Add the new value to sponsor data

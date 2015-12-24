@@ -9,5 +9,6 @@
 		<text name="AGROSPONSOR_HELPDSP" text="Daily sponsorship amount you will receive every day." />
 		<text name="AGROSPONSOR_YESNODSP" text="You want this to be your sponsor?" />
 		<text name="AGROSPONSOR_YESNODSPTXT" text="Are you sure you want to select %s as your sponsor?" />
+		<text name="AGROSPONSOR_EXITKEY" text="Use 'Q' to quit." />
 	</texts>
 </l10n>

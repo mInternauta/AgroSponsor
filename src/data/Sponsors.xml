@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <Sponsors>
 	<Avaliable>
-		jcb|itrunner|newholland
+		jcb|itrunner|newholland|bergmann|case|farmtech|grimme|hurlimann|kemper|krone
 	</Avaliable>
 	<Items>
-		<jcb title="JCB" maxShip="1285" maxReward="95000" image="img/jcb.jpg" />
-		<itrunner  title="ITRunner" maxShip="1585" maxReward="85000" image="img/itrunner.jpg" />
-		<newholland title="New Holland" maxShip="1385" maxReward="98000" image="img/newholland.jpg" />
+		<jcb title="JCB" maxShip="2285" maxReward="95000" image="img/jcb.jpg" />
+		<itrunner  title="ITRunner" maxShip="3585" maxReward="85500" image="img/itrunner.jpg" />
+		<newholland title="New Holland" maxShip="2385" maxReward="98200" image="img/newholland.jpg" />
+		<bergmann title="Bergmann" maxShip="2085" maxReward="102890" image="img/bergmann.jpg" />
+		<case title="Case" maxShip="3785" maxReward="80250" image="img/case.jpg" />
+		<farmtech title="Farmtech" maxShip="3485" maxReward="96500" image="img/farmtech.jpg" />
+		<grimme title="Grimme" maxShip="2345" maxReward="99200" image="img/grimme.jpg" />
+		<hurlimann title="Hurlimann" maxShip="2245" maxReward="100200" image="img/hurlimann.jpg" />
+		<kemper title="Kemper" maxShip="3445" maxReward="97200" image="img/kemper.jpg" />
+		<krone title="Krone" maxShip="2905" maxReward="98540" image="img/krone.jpg" />
 	</Items>
 </Sponsors>

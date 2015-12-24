@@ -9,6 +9,7 @@
 		<text name="AGROSPONSOR_HELPDSP" text="Valor do patrocinio diario que voce ira receber." />
 		<text name="AGROSPONSOR_YESNODSP" text="Deseja que este seja o seu patrocinador?" />
 		<text name="AGROSPONSOR_YESNODSPTXT" text="Tem certeza que deseja selecionar %s como seu patrocinador?" />
+		<text name="AGROSPONSOR_EXITKEY" text="Utilize 'Q' para sair." />
 	</texts>
 </l10n>
 

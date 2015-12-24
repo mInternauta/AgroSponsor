@@ -102,7 +102,7 @@ function AgroSponsor:update(dt)
 	AgroSponsor:checkIsSaved();
 	asClock:update(g_currentMission.environment);
 	
-	if not AgroSpManager:hasSponsorSelected() and self.gameIsSaved == 1 then 
+	if not AgroSpManager:hasSponsorSelected() and self.gameIsSaved == 1 and hudSponsors:getIsCancelled() == false then 
 		-- Render the Selection Hud 			
 		hudSponsors:show();
 	end

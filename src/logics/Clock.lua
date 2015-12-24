@@ -24,15 +24,12 @@ end
 function asClock:update(env)
 	self.lastHour = math.floor(env.dayTime / (1000 * 60 * 60));
 	
-	if self.lastHour >= 18 and self.lastHour <= 5 then
+	if self.lastHour >= 18 or self.lastHour <= 5 and self.isNight == false then
 		self.isNight = true;
-	elseif self.lastHour <= 18 and self.lastHour >= 5 then
-		if self.isNight then			
-			asClock:dispatchNewDay();
-			
-			as.utils.printDebug("Is Day Baby lets roll!");
-		end
-		
+	end 
+	
+	if self.lastHour <= 18 and self.lastHour >= 5 and self.isNight == true then
+		asClock:dispatchNewDay();							
 		self.isNight = false;
 	end 
 end
