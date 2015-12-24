@@ -27,7 +27,7 @@ source(AgroSponsor.ModInstallDir .. 'libs/tableSerializer.lua')
 function AgroSpManager:rollReward()
 	local sponsor = AgroSpManager.Sponsor;
 		
-	as.utils.printDebug("Is Day Baby lets roll!");
+	as.utils.printDebug("Is a new day Baby lets roll!");
 	
 	if sponsor ~= nil then
 		local ship = sponsor['Ship'];
@@ -87,6 +87,8 @@ function AgroSpManager:saveSponsor(sponsor)
 	setXMLString(xml, "Sponsor.Data", data);
 	saveXMLFile(xml);
 	delete(xml);
+	
+	self:loadSponsor();
 end 
 
 -- Select random sponsors 
@@ -165,3 +167,13 @@ function AgroSpManager:load()
 	-- Register the Clock Event
 	asClock:registerNewDayEvent('asSponsorRoll', self.rollReward);
 end
+
+-- Prevent the savegame from removind the sponsor.id file
+function AgroSpManager:autoSave()
+	as.utils.printDebug("SAVING");
+	if AgroSpManager.Sponsor ~= nil then 
+		as.utils.printDebug("SAVING2");
+		AgroSpManager:saveSponsor(AgroSpManager.Sponsor);
+	end 
+end 
+g_careerScreen.saveSavegame = Utils.appendedFunction(g_careerScreen.saveSavegame, AgroSpManager.autoSave);

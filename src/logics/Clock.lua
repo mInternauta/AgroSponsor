@@ -17,20 +17,20 @@ asClock = {}
 
 function asClock:init()
 	self.lastHour = 0;
-	self.isNight = false;
+	self.newDayDispatched = false;
 	self.regsEvents = {}
 end
 
 function asClock:update(env)
 	self.lastHour = math.floor(env.dayTime / (1000 * 60 * 60));
 	
-	if self.lastHour >= 18 or self.lastHour <= 5 and self.isNight == false then
-		self.isNight = true;
+	if self.lastHour >= 0 and self.lastHour <= 1 and self.newDayDispatched == false then
+		asClock:dispatchNewDay();
+		self.newDayDispatched = true;
 	end 
 	
-	if self.lastHour <= 18 and self.lastHour >= 5 and self.isNight == true then
-		asClock:dispatchNewDay();							
-		self.isNight = false;
+	if self.lastHour > 1 and self.lastHour <= 23 and self.newDayDispatched then
+		self.newDayDispatched = false;
 	end 
 end
 
