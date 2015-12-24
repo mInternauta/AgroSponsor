@@ -16,12 +16,77 @@
 AgroSpManager = {}
 AgroSpManager.sponsors = {}
 
+-- the possibility (a percentage) of the player receives a sponsorship in the day.
+SponsorChance = 15
+
 local AgroSpManager_mt = Class(AgroSpManager);
+
+-- Depedencies
+source(AgroSponsor.ModInstallDir .. 'libs/tableSerializer.lua')
+
+function AgroSpManager:rollReward()
+	local sponsor = AgroSpManager.Sponsor;
+		
+	as.utils.printDebug("Is Day Baby lets roll!");
+	
+	if sponsor ~= nil then
+		local ship = sponsor['Ship'];
+		local maxReward = sponsor['Reward'];
+		local minReward = maxReward * 0.6;
+		
+		local reward = math.random(minReward, maxReward);
+		local chance = math.random(1, 100);
+		
+		if chance <= SponsorChance then
+			AgroMessages:show(reward, sponsor['Title']);
+			g_currentMission:addSharedMoney(reward, 'others');	
+		end
+		
+		g_currentMission:addSharedMoney(ship, 'others');
+	end 
+end 
 
 -- Check if is the play already selected the sponsors
 function AgroSpManager:hasSponsorSelected() 
-	local sponsorFile = AgroSponsor.saveGameDir .. '/sponsor.id';
-	return fileExists(sponsorFile);
+	local sponsorFile = AgroSponsor.saveGameDir .. '/sponsor.data';
+	
+	if fileExists(sponsorFile) then 
+		return true;
+	else
+		return false;
+	end
+end 
+
+-- Load the sponsor 
+function AgroSpManager:loadSponsor()
+	local sponsorFile = AgroSponsor.saveGameDir .. '/sponsor.data';
+	local sponsor = nil;
+	
+	if fileExists(sponsorFile) then
+		local xml = loadXMLFile("SponsorXml", sponsorFile);
+		local sData = getXMLString(xml, "Sponsor.Data");
+		sponsor = table.deserialize(sData);
+	end 
+	
+	self.Sponsor = sponsor;
+end
+
+-- Save the sponsor to the savegame 
+function AgroSpManager:saveSponsor(sponsor)
+	local sponsorFile = AgroSponsor.saveGameDir .. '/sponsor.data';
+	local xml = nil;
+	
+	if fileExists(sponsorFile) then
+		xml = loadXMLFile("SponsorXml", sponsorFile);
+	else 
+		xml = createXMLFile("SponsorXml", sponsorFile, "Sponsor");
+	end 
+	
+	local data = table.serialize(sponsor);
+	
+	setXMLString(xml, "Sponsor.Data", data);
+	saveXMLFile(xml);
+	delete(xml);
 end 
 
 -- Select random sponsors 
@@ -34,6 +99,7 @@ function AgroSpManager:buildSponsorList()
 		local chance  = math.random(0, 10);
 		if chance <= 6 then 
 			as.utils.printDebug('Selected Sponsor: ' .. name);
+			
 			local spData = sponsor;					
 			
 			-- Generate the Sponsor daily sponsorship
@@ -59,7 +125,7 @@ end
 
 -- Load the Sponsor Configuration from the XML
 function AgroSpManager:load() 
-	local xmlPath = AgroSponsor.ModInstallDir .. 'Sponsors.xml';
+	local xmlPath = AgroSponsor.ModInstallDir .. 'data/Sponsors.xml';
 	local spXml = loadXMLFile('asSponsors', xmlPath);
 	
 	as.utils.printDebug('Loading Sponsors: ' .. xmlPath);
@@ -95,4 +161,7 @@ function AgroSpManager:load()
 	else 
 		as.utils.printDebug('Invalid Sponsors.xml, cant load the sponsors!');
 	end ;
+	
+	-- Register the Clock Event
+	asClock:registerNewDayEvent('asSponsorRoll', self.rollReward);
 end

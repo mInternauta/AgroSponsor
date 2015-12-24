@@ -13,25 +13,36 @@
 -- You should have received a copy of the GNU General Public License
 -- along with this program; if not, write to the Free Software
 -- Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-AgroMessages = {}
-AgroMessages.SpMsgCount = 5
+asClock = {}
+
+function asClock:init()
+	self.lastHour = 0;
+	self.isNight = false;
+	self.regsEvents = {}
+end
+
+function asClock:update(env)
+	self.lastHour = math.floor(env.dayTime / (1000 * 60 * 60));
 	
-function AgroMessages:show(reward)
-	local msgTitle = 'AgroSponsors'
-	local msgTxt = ''
-	
-	local rndIndex = math.random(1, AgroMessages.SpMsgCount);
-	local curIndex = 0;
-	
-	for curIndex=1,AgroMessages.SpMsgCount do
-		if rndIndex == curIndex then
-			local key = 'AGROSPONSOR_SP' .. curIndex;			
-			msgTxt =  as.utils.getText(key);
-			break;				
+	if self.lastHour >= 18 and self.lastHour <= 5 then
+		self.isNight = true;
+	elseif self.lastHour <= 18 and self.lastHour >= 5 then
+		if self.isNight then			
+			asClock:dispatchNewDay();
+			
+			as.utils.printDebug("Is Day Baby lets roll!");
 		end
-	end;
-	
-	msgTxt = msgTxt:format(g_i18n:formatMoney(reward));
-	
-	g_currentMission.inGameMessage:showMessage(msgTitle, msgTxt, 15000, false);
+		
+		self.isNight = false;
+	end 
+end
+
+function asClock:dispatchNewDay()
+	for key, event in pairs(self.regsEvents) do
+		event();
+	end 
+end
+
+function asClock:registerNewDayEvent(eventName, callback)
+	self.regsEvents[eventName] = callback;
 end 

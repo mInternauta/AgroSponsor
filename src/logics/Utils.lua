@@ -31,7 +31,7 @@ function as.utils.getPxToNormalConstant(widthPx, heightPx)
 end
 
 function as.utils.printDebug(info)
-	print('[AgroSponsors] [DEBUG] ' .. info);
+	print('[AgroSponsor] [DEBUG] ' .. info);
 end
 
 function as.utils.print_r( t )  

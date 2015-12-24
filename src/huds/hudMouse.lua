@@ -20,6 +20,7 @@ local asMouseHud_mt = Class(asMouseHud);
 function asMouseHud:init() 
 	self.oldMouseWrap = wrapMousePosition;	
 	--asMouseHud:setEnabled(false);
+	self.isDown = false;
 end 
 
 -- Set the mouse position
@@ -51,8 +52,13 @@ function asMouseHud:mouseEvent(posX, posY, isDown, isUp, button)
 	-- Track the mouse position
 	if self.enabled then
 		asMouseHud:setPosition(posX, posY);
+		self.isDown = isDown;
 	end
 end
+
+function asMouseHud:isMouseDown() 
+	return self.isDown;
+end 
 
 function asMouseHud:isInsideOf(ovX, ovY, ovW, ovH) 
 	if self.posX ~= nil and self.posY ~= nil then 

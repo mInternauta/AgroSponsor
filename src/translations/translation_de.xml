@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<l10n>
+	<!-- TEMPORARY TRANSLATION FOR de -->
+	<texts>
+		<text name="AGROSPONSOR_SP1" text="In partnership with /NAME and other companies. /LF The AgroSponsor offers you a sponsorship of %s for the purchase of equipment and tools!/LF We hope your success with the AgroSponsor and Partners! " />
+		<text name="AGROSPONSOR_SP2" text="In exclusive partnership with /NAME. /LF The AgroSponsor gives you a sponsorship of %s for the purchase of equipment and tools!" />		
+		<text name="AGROSPONSOR_SP3" text="/NAME offers you an exclusive sponsorship of %s for the purchase of equipment and tools! /LF We hope your success with the AgroSponsor and Partners!" />	<text name="AGROSPONSOR_CHOOSESP" text="Choose your sponsor:" />
+		<text name="AGROSPONSOR_HELPR" text="Top prize that you can compete every day." />
+		<text name="AGROSPONSOR_HELPDSP" text="Daily sponsorship amount you will receive every day." />
+		<text name="AGROSPONSOR_YESNODSP" text="You want this to be your sponsor?" />
+		<text name="AGROSPONSOR_YESNODSPTXT" text="Are you sure you want to select %s as your sponsor?" />
+	</texts>
+</l10n>

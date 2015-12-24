@@ -22,7 +22,7 @@ hudSponsors.maxSponsors = 6;
 hudSponsors.perLineSponsors = 3;
 
 -- Sponsor Start Position 
-hudSponsors.startPosX = 0.174;
+hudSponsors.startPosX = 0.274;
 hudSponsors.startPosY = 0.632;
 
 hudSponsors.spImgRatio = 0.18;
@@ -30,19 +30,16 @@ hudSponsors.spImgRatio = 0.18;
 local hudSponsors_mt = Class(hudSponsors);
 
 -- Load the Depedencies
-source(AgroSponsor.ModInstallDir .. 'Sponsors.lua')
-source(AgroSponsor.ModInstallDir .. 'hudMouse.lua')
+source(AgroSponsor.ModInstallDir .. 'huds/hudMouse.lua')
+source(AgroSponsor.ModInstallDir .. 'huds/hudDialogs.lua')
 
 -- initialize the Hud
-function hudSponsors:init()
-	-- Load the Sponsor List
-	AgroSpManager:load();
-	
+function hudSponsors:init(spList)	
 	-- Create the backgroung overlay
 	self.backgOverlay = createImageOverlay(Utils.getFilename('img/hudSponsorSel.png', AgroSponsor.ModInstallDir));
 	
 	-- Create the sponsor list
-	self.sponsorList = AgroSpManager:buildSponsorList();
+	self.sponsorList = spList;
 	
 	-- Build the overlays for sponsors
 	hudSponsors:buildSponsors();
@@ -131,7 +128,7 @@ end
 function hudSponsors:draw()
 	if self.visible then 
 		-- Render the overlay
-		renderOverlay(self.backgOverlay, 0.12, 0.12, 0.75, 0.75);	
+		renderOverlay(self.backgOverlay, 0.22, 0.12, 0.75, 0.75);	
 
 		-- Render all sponsor overlays
 		for name, data in pairs(self.spOverlays) do 
@@ -153,9 +150,9 @@ function hudSponsors:draw()
 		end 
 		
 		-- Render all the texts
-		renderText(0.123, 0.846, 0.024, as.utils.getText('AGROSPONSOR_CHOOSESP')); -- TITLE
-		renderText(0.144, 0.171, 0.018, as.utils.getText('AGROSPONSOR_HELPDSP')); -- Help Reward
-		renderText(0.144, 0.135, 0.018, as.utils.getText('AGROSPONSOR_HELPR')); -- Help Daily Sponsorship
+		renderText(0.223, 0.846, 0.024, as.utils.getText('AGROSPONSOR_CHOOSESP')); -- TITLE
+		renderText(0.245, 0.171, 0.018, as.utils.getText('AGROSPONSOR_HELPDSP')); -- Help Reward
+		renderText(0.245, 0.135, 0.018, as.utils.getText('AGROSPONSOR_HELPR')); -- Help Daily Sponsorship
 		
 		-- Enable the mouse 
 		asMouseHud:setEnabled(true);
@@ -172,4 +169,23 @@ function hudSponsors:keyEvent(unicode, sym, modifier, isDown)
 end;
 
 function hudSponsors:mouseEvent(posX, posY, isDown, isUp, button)
+	if isDown and self.hvSponsorName ~= nil and self.visible then
+		self.selectedSponsor = self.sponsorList[self.hvSponsorName];
+						
+		local text = as.utils.getText('AGROSPONSOR_YESNODSPTXT'):format(self.selectedSponsor['Title']);
+		local title = as.utils.getText('AGROSPONSOR_YESNODSP');
+		asDialogs:showYesNo(title, text, self.saveSelectedSponsor);
+	end 
+end;
+
+function hudSponsors:saveSelectedSponsor(yes)	
+	if yes then
+		as.utils.printDebug('Player has selected a sponsor: ');
+		as.utils.print_r(hudSponsors.selectedSponsor);
+		
+		AgroSpManager:saveSponsor(hudSponsors.selectedSponsor);
+		hudSponsors:hide();
+	end 
+	
+	g_gui:showGui('');
 end;
