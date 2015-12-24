@@ -2,13 +2,13 @@
 Its a Farming Simulator 2015 Mod, This mod adds a sponsors for your farm, every day in the morning you have the chance to win a sponsorship 
 of AgroSponsors and its partners to purchase equipment and tools.
 
-![Preview](http://s30.postimg.org/fhruq5d9d/Screenshot_8.png)
+![Preview](http://s10.postimg.org/pzwgv06p5/agrosponsor.jpg)
 
 # How its work?
-Every day the player has chances to win between $ 5,000 and $ 875,050 in cash as sponsorship. Just play and hope to earn money.
-To better balance the game, all values are random and balanced and the player has a small chance of winning per day
+This mod adds a sponsor system for your game, at the beginning you choose your sponsor, each sponsor has a maximum prize value and a daily overall support amount.
 
-As a means of demonstration, the player earns a random value at the start of the game.
+The prize value is compete every day and you have the chance to win.
+The Assistance value is deposited every day in your account as a way to help for your expenses on the farm.
 
 # Download
 See Releases, download the zip and put in your Mods folder.
