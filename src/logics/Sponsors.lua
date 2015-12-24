@@ -17,7 +17,7 @@ AgroSpManager = {}
 AgroSpManager.sponsors = {}
 
 -- the possibility (a percentage) of the player receives a sponsorship in the day.
-SponsorChance = 15
+SponsorChance = 20
 
 local AgroSpManager_mt = Class(AgroSpManager);
 
@@ -42,6 +42,7 @@ function AgroSpManager:rollReward()
 			g_currentMission:addSharedMoney(reward, 'others');	
 		end
 		
+		as.utils.printDebug("[Daily Sponsorship] " .. ship);
 		g_currentMission:addSharedMoney(ship, 'others');
 	end 
 end 
@@ -107,12 +108,12 @@ function AgroSpManager:buildSponsorList()
 			-- Generate the Sponsor daily sponsorship
 			local maxSpShip = spData['MaxShip'];
 			local minSpShip = maxSpShip * 0.28;
-			local spShip = math.random(minSpShip, maxSpShip);
+			local spShip = math.ceil(math.random(minSpShip, maxSpShip));
 			
 			-- Generate the sponsor complete reward
 			local maxSpReward = spData['MaxReward'];
 			local minSpReward = maxSpReward * 0.28;
-			local spReward = math.random(minSpReward, maxSpReward);
+			local spReward = math.ceil(math.random(minSpReward, maxSpReward));
 			
 			-- Add the new value to sponsor data
 			spData['Reward'] = spReward;
@@ -172,7 +173,7 @@ end
 function AgroSpManager:autoSave()
 	as.utils.printDebug("SAVING");
 	if AgroSpManager.Sponsor ~= nil then 
-		as.utils.printDebug("SAVING2");
+		as.utils.printDebug("SAVING SPONSOR");
 		AgroSpManager:saveSponsor(AgroSpManager.Sponsor);
 	end 
 end 

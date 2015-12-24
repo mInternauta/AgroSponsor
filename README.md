@@ -10,5 +10,9 @@ This mod adds a sponsor system for your game, at the beginning you choose your s
 The prize value is compete every day and you have the chance to win.
 The Assistance value is deposited every day in your account as a way to help for your expenses on the farm.
 
+# Bugs and new ideas?
+Don't be afraid, report bugs or request new features in the Issues section:
+[Issues Section](https://github.com/mInternauta/AgroSponsor/issues)
+
 # Download
 See Releases, download the zip and put in your Mods folder.
