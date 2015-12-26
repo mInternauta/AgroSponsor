@@ -30,6 +30,6 @@ del /F /Q list.txt
 
 echo %buildFrom%* > list.txt
 
-%zip% a -tzip "%fZipFile%" @list.txt
+"%zip%" a -tzip "%fZipFile%" @list.txt
 
 echo Builded

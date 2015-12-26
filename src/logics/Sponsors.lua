@@ -17,7 +17,7 @@ AgroSpManager = {}
 AgroSpManager.sponsors = {}
 
 -- the possibility (a percentage) of the player receives a sponsorship in the day.
-SponsorChance = 20
+SponsorChance = 15
 
 local AgroSpManager_mt = Class(AgroSpManager);
 
@@ -27,6 +27,7 @@ source(AgroSponsor.ModInstallDir .. 'libs/tableSerializer.lua')
 function AgroSpManager:rollReward()
 	local sponsor = AgroSpManager.Sponsor;
 		
+	AgroSpManager.countRewardSpin = AgroSpManager.countRewardSpin + 1;
 	as.utils.printDebug("Is a new day Baby lets roll!");
 	
 	if sponsor ~= nil then
@@ -40,22 +41,36 @@ function AgroSpManager:rollReward()
 		if chance <= SponsorChance then
 			AgroMessages:show(reward, sponsor['Title']);
 			g_currentMission:addSharedMoney(reward, 'others');	
+			
+			AgroSpManager.countReward = AgroSpManager.countReward + 1;
 		end
 		
 		as.utils.printDebug("[Daily Sponsorship] " .. ship);
 		g_currentMission:addSharedMoney(ship, 'others');
 	end 
+	
+	as.utils.printDebug("[SPIN_METRIC] " .. AgroSpManager.countRewardSpin .. "|" .. AgroSpManager.countReward);
 end 
 
 -- Check if is the play already selected the sponsors
 function AgroSpManager:hasSponsorSelected() 
+	if AgroSpManager:isSponsorSaved() and self.Sponsor ~= nil then 
+		return true;
+	elseif self.Sponsor ~= nil then
+		return true;
+	else 
+		return false;
+	end
+end 
+
+function AgroSpManager:isSponsorSaved()
 	local sponsorFile = AgroSponsor.saveGameDir .. '/sponsor.data';
 	
 	if fileExists(sponsorFile) then 
 		return true;
-	else
+	else 
 		return false;
-	end
+	end 
 end 
 
 -- Load the sponsor 
@@ -74,22 +89,24 @@ end
 
 -- Save the sponsor to the savegame 
 function AgroSpManager:saveSponsor(sponsor)
-	local sponsorFile = AgroSponsor.saveGameDir .. '/sponsor.data';
-	local xml = nil;
+	if AgroSponsor:isGameSaved() then 
+		local sponsorFile = AgroSponsor.saveGameDir .. '/sponsor.data';
+		local xml = nil;
+			
+		if fileExists(sponsorFile) then
+			xml = loadXMLFile("SponsorXml", sponsorFile);
+		else 
+			xml = createXMLFile("SponsorXml", sponsorFile, "Sponsor");
+		end 
+		
+		local data = table.serialize(sponsor);
+		
+		setXMLString(xml, "Sponsor.Data", data);
+		saveXMLFile(xml);
+		delete(xml);
+	end;
 	
-	if fileExists(sponsorFile) then
-		xml = loadXMLFile("SponsorXml", sponsorFile);
-	else 
-		xml = createXMLFile("SponsorXml", sponsorFile, "Sponsor");
-	end 
-	
-	local data = table.serialize(sponsor);
-	
-	setXMLString(xml, "Sponsor.Data", data);
-	saveXMLFile(xml);
-	delete(xml);
-	
-	self:loadSponsor();
+	self.Sponsor = sponsor;
 end 
 
 -- Select random sponsors 
@@ -131,6 +148,11 @@ function AgroSpManager:load()
 	local xmlPath = AgroSponsor.ModInstallDir .. 'data/Sponsors.xml';
 	local spXml = loadXMLFile('asSponsors', xmlPath);
 	
+	AgroSpManager.countRewardSpin = 0;
+	AgroSpManager.countReward = 0;
+	
+	self.Sponsor = nil;
+	
 	as.utils.printDebug('Loading Sponsors: ' .. xmlPath);
 	
 	if hasXMLProperty(spXml, 'Sponsors.Avaliable') and hasXMLProperty(spXml, 'Sponsors.Items') then
@@ -171,9 +193,8 @@ end
 
 -- Prevent the savegame from removind the sponsor.id file
 function AgroSpManager:autoSave()
-	as.utils.printDebug("SAVING");
-	if AgroSpManager.Sponsor ~= nil then 
-		as.utils.printDebug("SAVING SPONSOR");
+	if AgroSpManager.Sponsor ~= nil and AgroSponsor:isGameSaved() then 
+		as.utils.printDebug("Auto Saving the Sponsor");
 		AgroSpManager:saveSponsor(AgroSpManager.Sponsor);
 	end 
 end 

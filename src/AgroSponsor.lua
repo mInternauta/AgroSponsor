@@ -75,10 +75,10 @@ function AgroSponsor:loadMap(name)
 	AgroSponsor:checkIsSaved();
 	
 	-- Check if the player has a sponsor selected
-	if not AgroSpManager:hasSponsorSelected() and self.gameIsSaved == 1 then 
+	if not AgroSpManager:isSponsorSaved() then 
 		-- Render the Selection Hud 			
 		hudSponsors:show();
-	elseif AgroSpManager:hasSponsorSelected() and self.gameIsSaved == 1 then 
+	elseif AgroSpManager:isSponsorSaved() and self.gameIsSaved == 1 then 
 		-- Load the Sponsor
 		AgroSpManager:loadSponsor();
 		
@@ -88,6 +88,16 @@ function AgroSponsor:loadMap(name)
 	
 	print('[AgroSponsor] Loaded ')
 end;
+
+
+function AgroSponsor:isGameSaved()
+	self:checkIsSaved();
+	if self.gameIsSaved == 1 then
+		return true;
+	else 
+		return false;
+	end 
+end 
 
 function AgroSponsor:checkIsSaved()
 	-- Check if is the first time	
@@ -102,10 +112,15 @@ function AgroSponsor:update(dt)
 	AgroSponsor:checkIsSaved();
 	asClock:update(g_currentMission.environment);
 	
-	if not AgroSpManager:hasSponsorSelected() and self.gameIsSaved == 1 and hudSponsors:getIsCancelled() == false then 
+	if not AgroSpManager:hasSponsorSelected() and hudSponsors:getIsCancelled() == false and hudSponsors:isVisible() == false then 
 		-- Render the Selection Hud 			
 		hudSponsors:show();
 	end
+
+	if AgroSpManager:isSponsorSaved() == false then 
+		-- Auto save the Sponsor
+		AgroSpManager:autoSave();
+	end;
 end; 
 
 function AgroSponsor:keyEvent(unicode, sym, modifier, isDown)
