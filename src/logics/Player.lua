@@ -79,7 +79,7 @@ function AgroPlayerProfile:calcReward(rewardBase)
 	local levelFactor = AS_PLAYER_RWFACTOR * curLevel;
 	local rewardAdd = rewardBase * levelFactor;
 	
-	return rewardBase + rewardAdd;
+	return math.ceil(rewardBase + rewardAdd);
 end 
 
 -- Initialize the Player Class
