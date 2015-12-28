@@ -16,7 +16,7 @@
 AgroMessages = {}
 AgroMessages.SpMsgCount = 3
 	
-function AgroMessages:show(reward, spName)
+function AgroMessages:showReward(reward, spName)
 	local msgTitle = 'AgroSponsors'
 	local msgTxt = ''
 	
@@ -36,3 +36,8 @@ function AgroMessages:show(reward, spName)
 	
 	g_currentMission.inGameMessage:showMessage(msgTitle, msgTxt, 15000, false);
 end 
+
+function AgroMessages:show(msgTxt, msgTitle)	
+	g_currentMission.inGameMessage:showMessage(msgTitle, msgTxt, 25000, false);
+end 
+

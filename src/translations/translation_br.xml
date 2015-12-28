@@ -10,6 +10,17 @@
 		<text name="AGROSPONSOR_YESNODSP" text="Deseja que este seja o seu patrocinador?" />
 		<text name="AGROSPONSOR_YESNODSPTXT" text="Tem certeza que deseja selecionar %s como seu patrocinador?" />
 		<text name="AGROSPONSOR_EXITKEY" text="Utilize 'Q' para sair." />
+		<text name="AGROSPONSOR_MAINMENUTITLE" text="Menu Principal" />
+		<text name="AGROSPONSOR_MMPROFILE" text="Meu Perfil" />
+		<text name="AGROSPONSOR_MMSPONSOR" text="Trocar Patrocinador" />
+		<text name="AGROSPONSOR_LEVEL" text="Nível" />
+		<text name="AGROSPONSOR_EXP" text="Pontos de Exp" />
+		<text name="AGROSPONSOR_TIPNEWGAME" text="Obrigado, Parceiro você ganhou 12 pontos de experiência. Acesse o meu utilizando as teclas CTRL+M, você poderá trocar a qualquer momento de patrocinador e poderá visualizar o seu perfil." />
+		<text name="AGROSPONSOR_TIPNEWGAME2" text="Todo parceiro da AgroSponsor tem niveis de parceria quanto maior o nivel maior é recompensa que você ganha e o apoio diário. Além de ofertas melhores." />
+		<text name="AGROSPONSOR_TIPNEWGAME3" text="Encontre mais ajuda em: https://github.com/mInternauta/AgroSponsor" />
+		<text name="AGROSPONSOR_SPONSOR" text="Patrocinador" />
+		<text name="AGROSPONSOR_DAILYSHIP" text="Diário" />		
+		<text name="AGROSPONSOR_MAXREWARD" text="Premio Maximo" />
 	</texts>
 </l10n>
 

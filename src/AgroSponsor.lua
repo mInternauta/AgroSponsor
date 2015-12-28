@@ -19,16 +19,62 @@ AgroSponsor.saveGameDir = ''
 AgroSponsor.gameIsSaved = 0
 
 
--- Load the Depedencies
+-- Load the Dependencies
 source(AgroSponsor.ModInstallDir .. 'logics/Messages.lua')
 source(AgroSponsor.ModInstallDir .. 'logics/Utils.lua')
 source(AgroSponsor.ModInstallDir .. 'logics/Sponsors.lua')
 source(AgroSponsor.ModInstallDir .. 'logics/Clock.lua')
+source(AgroSponsor.ModInstallDir .. 'logics/Player.lua')
+source(AgroSponsor.ModInstallDir .. 'shell/basicShell.lua')
+
 source(AgroSponsor.ModInstallDir .. 'huds/hudSponsors.lua')
+source(AgroSponsor.ModInstallDir .. 'huds/hudMenu.lua')
+source(AgroSponsor.ModInstallDir .. 'huds/mainMenu.lua')
 
 function AgroSponsor:loadMap(name)
 	print('[AgroSponsor] Loading ')
 	
+	-- Check for the directory
+	AgroSponsor:checkDirectory();
+	
+	-- Debug 
+	print('[AgroSponsor] Save directory ' .. self.saveGameDir);
+	print('[AgroSponsor] Save file ' .. AgroSponsor.firstLoadFile);
+	
+	-- Load the Clock
+	asClock:init();
+	
+	-- Load the Player Profile
+	AgroPlayerProfile:init();
+	
+	-- Load the Sponsor List
+	AgroSpManager:load();
+	
+	-- Load the GUIs
+	self:loadGUI();
+	
+	-- Load the Shell
+	AgroShell:load();
+	
+	-- Add the Sponsor List to be reload every day in the game 
+	asClock:registerNewDayEvent('asSponsorList', AgroSponsor.loadSponsorSelection());
+	
+	-- Add huds to event listener 
+	addModEventListener(hudSponsors);
+
+	-- Check the savegame 
+	self:checkSavegame()
+	
+	print('[AgroSponsor] Loaded ')
+end;
+
+function AgroSponsor:loadSponsorSelection()
+	local spList = AgroSpManager:buildSponsorList();	
+	-- Load the Sponsor Huds
+	hudSponsors:init(spList);
+end 
+
+function AgroSponsor:checkDirectory()
 	-- Check for the Savegame Directory
 	if g_server ~= nil then
 		local savegameDir;
@@ -48,29 +94,9 @@ function AgroSponsor:loadMap(name)
 		self.saveGameDir = savegameDir;
 		self.firstLoadFile = savegameDir .. '/sponsorship.id';
 	end
-	
-	self.isNight = not g_currentMission.environment.isSunOn;
-	
-	-- Debug 
-	print('[AgroSponsor] Save directory ' .. self.saveGameDir);
-	print('[AgroSponsor] Save file ' .. AgroSponsor.firstLoadFile);
-	
-	-- Load the Clock
-	asClock:init();
-	
-	-- Load the Sponsor List
-	AgroSpManager:load();
-	local spList = AgroSpManager:buildSponsorList();
-	
-	-- Load the Sponsor Huds
-	hudSponsors:init(spList);
-	
-	-- Initialize the mouse cursor
-	asMouseHud:init();
-	
-	-- Add huds to event listener 
-	addModEventListener(hudSponsors);
+end 
 
+function AgroSponsor:checkSavegame()
 	-- Check if is the first time	
 	AgroSponsor:checkIsSaved();
 	
@@ -84,11 +110,19 @@ function AgroSponsor:loadMap(name)
 		
 		as.utils.printDebug("Current Sponsor: ");
 		as.utils.print_r(AgroSpManager.Sponsor);
-	end 
-	
-	print('[AgroSponsor] Loaded ')
-end;
+	end 	
+end 
 
+function AgroSponsor:loadGUI()	
+	-- Load the Sponsor Selection Hud
+	AgroSponsor:loadSponsorSelection()
+
+	-- Initialize the mouse cursor
+	asMouseHud:init();
+	
+	-- Create the Main Menu
+	AgroMainMenu:load() ;
+end 
 
 function AgroSponsor:isGameSaved()
 	self:checkIsSaved();
@@ -135,4 +169,12 @@ end;
 function AgroSponsor:deleteMap()	
 end;
 
+function AgroSponsor:autoSave()
+	if AgroSpManager:isGameSaved() then	
+		 AgroPlayerProfile:autoSave();
+		 AgroSpManager:autoSave();
+	end;
+end;
+
+g_careerScreen.saveSavegame = Utils.appendedFunction(g_careerScreen.saveSavegame, AgroSponsor.autoSave);
 addModEventListener(AgroSponsor);

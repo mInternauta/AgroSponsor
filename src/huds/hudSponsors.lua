@@ -29,7 +29,7 @@ hudSponsors.spImgRatio = 0.18;
 
 local hudSponsors_mt = Class(hudSponsors);
 
--- Load the Depedencies
+-- Load the Dependencies
 source(AgroSponsor.ModInstallDir .. 'huds/hudMouse.lua')
 source(AgroSponsor.ModInstallDir .. 'huds/hudDialogs.lua')
 

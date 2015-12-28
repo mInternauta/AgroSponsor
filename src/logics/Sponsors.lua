@@ -21,7 +21,7 @@ SponsorChance = 15
 
 local AgroSpManager_mt = Class(AgroSpManager);
 
--- Depedencies
+-- Dependencies
 source(AgroSponsor.ModInstallDir .. 'libs/tableSerializer.lua')
 
 function AgroSpManager:rollReward()
@@ -38,13 +38,16 @@ function AgroSpManager:rollReward()
 		local reward = math.random(minReward, maxReward);
 		local chance = math.random(1, 100);
 		
+		reward = AgroPlayerProfile:calcReward(reward);
+		
 		if chance <= SponsorChance then
-			AgroMessages:show(reward, sponsor['Title']);
+			AgroMessages:showReward(reward, sponsor['Title']);
 			g_currentMission:addSharedMoney(reward, 'others');	
 			
 			AgroSpManager.countReward = AgroSpManager.countReward + 1;
 		end
 		
+		ship = AgroPlayerProfile:calcReward(ship);
 		as.utils.printDebug("[Daily Sponsorship] " .. ship);
 		g_currentMission:addSharedMoney(ship, 'others');
 	end 
@@ -106,6 +109,15 @@ function AgroSpManager:saveSponsor(sponsor)
 		delete(xml);
 	end;
 	
+	if self.Sponsor == nil and sponsor ~= nil then
+		-- Show the Help Message
+		local text = as.utils.getText('AGROSPONSOR_TIPNEWGAME') .. "\n\n" .. as.utils.getText('AGROSPONSOR_TIPNEWGAME2') .. "\n\n" .. as.utils.getText('AGROSPONSOR_TIPNEWGAME3');
+		AgroMessages:show(text, 'AgroSponsor');	
+		
+		-- Give the first experience
+		AgroPlayerProfile:giveExp(12);
+	end 
+	
 	self.Sponsor = sponsor;
 end 
 
@@ -124,12 +136,12 @@ function AgroSpManager:buildSponsorList()
 			
 			-- Generate the Sponsor daily sponsorship
 			local maxSpShip = spData['MaxShip'];
-			local minSpShip = maxSpShip * 0.28;
+			local minSpShip = maxSpShip * 0.4;
 			local spShip = math.ceil(math.random(minSpShip, maxSpShip));
 			
 			-- Generate the sponsor complete reward
 			local maxSpReward = spData['MaxReward'];
-			local minSpReward = maxSpReward * 0.28;
+			local minSpReward = maxSpReward * 0.32;
 			local spReward = math.ceil(math.random(minSpReward, maxSpReward));
 			
 			-- Add the new value to sponsor data
@@ -198,4 +210,3 @@ function AgroSpManager:autoSave()
 		AgroSpManager:saveSponsor(AgroSpManager.Sponsor);
 	end 
 end 
-g_careerScreen.saveSavegame = Utils.appendedFunction(g_careerScreen.saveSavegame, AgroSpManager.autoSave);
