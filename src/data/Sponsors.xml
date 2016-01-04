@@ -11,7 +11,7 @@
 		<case title="Case" maxShip="3785" maxReward="90250" image="img/case.jpg" />
 		<farmtech title="Farmtech" maxShip="3485" maxReward="106500" image="img/farmtech.jpg" />
 		<grimme title="Grimme" maxShip="2345" maxReward="109200" image="img/grimme.jpg" />
-		<hurlimann title="Hurlimann" maxShip="2245" maxReward="120200" image="img/hurlimann.jpg" />
+		<hurlimann title="Hürlimann" maxShip="2245" maxReward="120200" image="img/hurlimann.jpg" />
 		<kemper title="Kemper" maxShip="3445" maxReward="107200" image="img/kemper.jpg" />
 		<krone title="Krone" maxShip="2905" maxReward="108540" image="img/krone.jpg" />
 	</Items>

@@ -26,7 +26,7 @@ AgroMenuHud.MaxItems = 6;
 AgroMenuHud.imgRatioH = 0.0465;
 AgroMenuHud.imgRatioW = 0.17;
 AgroMenuHud.startPosX = 0.4145;
-AgroMenuHud.startPosY = 0.54;
+AgroMenuHud.startPosY = 0.60;
 
 function createMenuInstance(title)
 	local menu = {}
@@ -97,7 +97,7 @@ function AgroMenuHud:buildMenu()
 		local menuOverlayH = AgroMenuHud.imgRatioH;
 		local menuOverlayW = AgroMenuHud.imgRatioW;
 		local menuOverlayX = AgroMenuHud.startPosX;
-		local menuOverlayY = AgroMenuHud.startPosY + (0.062 * (menuCount - 1));
+		local menuOverlayY = AgroMenuHud.startPosY - (0.062 * (menuCount - 1));
 		
 		local menuData = {};
 		menuData['Overlay'] = menuOverlay;

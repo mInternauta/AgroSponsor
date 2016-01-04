@@ -21,5 +21,10 @@
 		<text name="AGROSPONSOR_SPONSOR" text="Sponsor" />
 		<text name="AGROSPONSOR_DAILYSHIP" text="Daily" />		
 		<text name="AGROSPONSOR_MAXREWARD" text="Max Prize" />
+		<text name="AGROSPONSOR_RENTTITLE" text="Equipment Rental" />
+		<text name="AGROSPONSOR_RENTBRAND" text="Brand" />
+		<text name="AGROSPONSOR_RENTEQ" text="Equipment" />
+		<text name="AGROSPONSOR_RENTEXPTIP" text="Experience Points" />
+		<text name="AGROSPONSOR_RENTPRICETIP" text="Daily Price" />
 	</texts>
 </l10n>

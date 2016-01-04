@@ -17,6 +17,7 @@ AgroMainMenu = {}
 
 
 source(AgroSponsor.ModInstallDir .. 'huds/hudPlayerProfile.lua')
+source(AgroSponsor.ModInstallDir .. 'huds/hudRentMenu.lua')
 
 -- Main Menu  Actions
 function AgroMainMenu:chooseSponsor()
@@ -27,6 +28,11 @@ end
 function AgroMainMenu:myProfile()
 	AgroMainMenu:hideMenu();
 	AgroPlayerProfHud:show();
+end
+
+function AgroMainMenu:rentMenu()
+	AgroMainMenu:hideMenu();
+	AgroRentMenuHud:show();
 end
 
 -- Main Menu HUD 
@@ -41,10 +47,12 @@ end;
 function AgroMainMenu:load() 
 	as.utils.printDebug("Creating a the Main Menu: ");		
 	self.MainMenu = createMenuInstance(as.utils.getText('AGROSPONSOR_MAINMENUTITLE'));			
+	self.MainMenu:addItem('asMMProfile', as.utils.getText('AGROSPONSOR_MMPROFILE'), AgroMainMenu.myProfile);		
 	self.MainMenu:addItem('asMMSponsor', as.utils.getText('AGROSPONSOR_MMSPONSOR'), AgroMainMenu.chooseSponsor);	
-	self.MainMenu:addItem('asMMProfile', as.utils.getText('AGROSPONSOR_MMPROFILE'), AgroMainMenu.myProfile);
+	self.MainMenu:addItem('asMMRent', as.utils.getText('AGROSPONSOR_RENTTITLE'), AgroMainMenu.rentMenu);	
 	
 	AgroPlayerProfHud:init();
+	AgroRentMenuHud:init();
 	
 	addModEventListener(self.MainMenu);
 end; 

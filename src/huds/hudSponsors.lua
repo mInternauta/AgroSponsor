@@ -165,7 +165,7 @@ function hudSponsors:draw()
 		renderText(0.223, 0.846, 0.024, as.utils.getText('AGROSPONSOR_CHOOSESP')); -- TITLE
 		renderText(0.245, 0.171, 0.018, as.utils.getText('AGROSPONSOR_HELPDSP')); -- Help Reward
 		renderText(0.245, 0.135, 0.018, as.utils.getText('AGROSPONSOR_HELPR')); -- Help Daily Sponsorship
-		renderText(0.545, 0.135, 0.018, as.utils.getText('AGROSPONSOR_EXITKEY')); -- Quit
+		renderText(0.645, 0.135, 0.018, as.utils.getText('AGROSPONSOR_EXITKEY')); -- Quit
 		
 		
 		-- Enable the mouse 
@@ -191,6 +191,7 @@ end;
 function hudSponsors:mouseEvent(posX, posY, isDown, isUp, button)
 	if isDown and self.hvSponsorName ~= nil and self.visible then
 		self.selectedSponsor = self.sponsorList[self.hvSponsorName];
+		self.selectedSponsor['Name'] = self.hvSponsorName;
 						
 		local text = as.utils.getText('AGROSPONSOR_YESNODSPTXT'):format(self.selectedSponsor['Title']);
 		local title = as.utils.getText('AGROSPONSOR_YESNODSP');

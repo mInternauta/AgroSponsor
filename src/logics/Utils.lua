@@ -15,6 +15,29 @@
 -- Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 as = {}
 as.utils = {}
+as.tables = {}
+
+function as.tables.len(T)
+  local count = 0
+  for _ in pairs(T) do count = count + 1 end
+  return count
+end
+
+function as.tables.getKeyInIndex(index, tab)
+	local indx = 0;
+	local keyname = nil;
+	
+	for k,v in pairs(tab) do 
+		if indx == index then 
+			keyname = k;
+			break;
+		else 
+			indx = indx + 1;
+		end 
+    end
+	
+	return keyname;
+end 
 
 function as.utils.getText(key)
 	local text = g_i18n:getText(key);

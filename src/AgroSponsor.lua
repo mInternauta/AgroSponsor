@@ -25,6 +25,7 @@ source(AgroSponsor.ModInstallDir .. 'logics/Utils.lua')
 source(AgroSponsor.ModInstallDir .. 'logics/Sponsors.lua')
 source(AgroSponsor.ModInstallDir .. 'logics/Clock.lua')
 source(AgroSponsor.ModInstallDir .. 'logics/Player.lua')
+source(AgroSponsor.ModInstallDir .. 'logics/RentManager.lua')
 source(AgroSponsor.ModInstallDir .. 'shell/basicShell.lua')
 
 source(AgroSponsor.ModInstallDir .. 'huds/hudSponsors.lua')

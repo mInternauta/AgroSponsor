@@ -23,6 +23,7 @@ function asMouseHud:init()
 	self.oldMouseWrap = wrapMousePosition;	
 	--asMouseHud:setEnabled(false);
 	self.isDown = false;
+	self.downEvents = {};
 end 
 
 -- Set the mouse position
@@ -48,13 +49,23 @@ function asMouseHud:setEnabled(eb)
 	InputBinding.setShowMouseCursor(eb);
 end
 
--- Render the mouse 
+function asMouseHud:registerDownEvent(id, func)
+	self.downEvents[id] = func;
+end 
 
 function asMouseHud:mouseEvent(posX, posY, isDown, isUp, button)
 	-- Track the mouse position
 	if self.enabled then
 		asMouseHud:setPosition(posX, posY);
 		self.isDown = isDown;
+		
+		if isDown then 
+			for k,v in pairs(self.downEvents) do 
+				v();
+			end 
+		end 
+	else 
+		self.isDown = false;
 	end
 end
 
