@@ -49,6 +49,10 @@ function as.utils.getText(key)
 	return text;
 end 
 
+function as.utils.toMoneyString(number)
+	return ('%s'):format(g_i18n:formatMoney(number))
+end
+
 function as.utils.getPxToNormalConstant(widthPx, heightPx)
 	return widthPx/g_screenWidth, heightPx/g_screenHeight;
 end

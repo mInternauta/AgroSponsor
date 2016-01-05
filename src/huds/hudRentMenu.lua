@@ -32,7 +32,10 @@ function AgroRentMenuHud:init()
 	
 	-- Build the Categories List 
 	for catId, cat in pairs(StoreItemsUtil.storeCategories) do 
-		self.cbCategories:add(catId, cat["title"]);
+		-- Exclude Sales, Animals and Placeables store items from the list
+		if cat["name"] ~= "sales" and cat["name"] ~= "animals" and cat["name"] ~= "placeables" then 
+			self.cbCategories:add(catId, cat["title"]);
+		end 
 	end 
 	
 	-- Bind Events
@@ -75,7 +78,7 @@ function AgroRentMenuHud:onItemChange()
 	
 	self.curImgOverlay = createImageOverlay(self.selectedItem['Store']['imageActive']);
 	
-	as.utils.print_r(self.selectedItem);
+--	as.utils.print_r(self.selectedItem);
 end 
 
 function AgroRentMenuHud:show()
@@ -130,19 +133,34 @@ function AgroRentMenuHud:draw()
 		self.cbItems:draw();
 		
 		if self.selectedItem ~= nil then 
+			-- Render the items overlay		
 			renderOverlay(self.backItemOverlay, 0.3, 0.26, 0.44, 0.40);
 			renderOverlay(self.curImgOverlay, 0.32, 0.382, 0.16, 0.20);
 			
 			-- Render the Prize
-			renderText(0.36, 0.305, 0.022, ('%s'):format(g_i18n:formatMoney(self.selectedItem['Price'])));
+			renderText(0.36, 0.305, 0.022, as.utils.toMoneyString(self.selectedItem['Price']));
 			
 			-- Render the Experience points
 			renderText(0.46, 0.305, 0.022, tostring(self.selectedItem['Exp']));
 			
 			-- Render the sponsored icon 
-			if self.selectedItem['IsSponsored'] then 
+			if self.selectedItem['IsSponsored'] then 				
 				renderOverlay(self.spoOverlay, 0.45, 0.362, 0.028, 0.04);
+				
+				setTextColor(0.8,0,0, 1)
+				renderText(0.6, 0.585, 0.020, 'Sponsored');
+				setTextColor(1,1,1, 1)
 			end 
+			
+			-- Render the brand and the name 
+			setTextColor(0,0,0, 1);
+			renderText(0.5, 0.605, 0.028, self.selectedItem['Store']['brand']);
+			renderText(0.5, 0.585, 0.022, self.selectedItem['Store']['name']);
+						
+			-- Render the equipament specs
+			
+			
+			setTextColor(1,1,1, 1);
 		end 
 		
 		-- Enable the mouse 
