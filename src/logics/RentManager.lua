@@ -232,3 +232,46 @@ Vehicle.update = function(self, dt)
 		AgroRentManager.ActivedRents[rentId]['ID'] = rentID;		
 	end 
 end 
+
+-- fix, to make sure it is impossible to sell a rent vehicle
+local gShowGUIOverwritten = g_gui.showGui;
+g_gui.showGui = function(self, guiName)
+	if guiName == "ShopScreen" then
+		self.vehiclesListChanged = true;
+		self.vehiclesListRemovedVehicles = {}
+		local numRemoved = 0;
+		for a=1, table.getn(g_currentMission.vehicles) do
+			local vehicle = g_currentMission.vehicles[a-numRemoved];
+			if vehicle.asRent ~= nil then
+				table.insert(self.vehiclesListRemovedVehicles, vehicle);
+				table.remove(g_currentMission.vehicles, a-numRemoved);
+				numRemoved = numRemoved + 1;
+			end;
+		end;
+	elseif self.vehiclesListChanged ~= nil and self.vehiclesListChanged then
+		self.vehiclesListChanged = false;
+		for a=1, table.getn(self.vehiclesListRemovedVehicles) do
+			table.insert(g_currentMission.vehicles, self.vehiclesListRemovedVehicles[a]);
+		end;
+		self.vehiclesListRemovedVehicles = nil;
+	end;
+	return gShowGUIOverwritten(self, guiName);
+end;
+
+local onCreateVehicleSeelingPoint = VehicleSellingPoint.onCreate;
+VehicleSellingPoint.onCreate = function(self, id)
+	onCreateVehicleSeelingPoint(self, id);
+	self.rentVehiclesModVehiclesInTrigger = {}
+	g_currentMission.vehicleSellingPointTriggerRV = self;
+end;
+
+local sellTriggerCallback = VehicleSellingPoint.sellAreaTriggerCallback;
+VehicleSellingPoint.sellAreaTriggerCallback = function(self, triggerId, otherId, onEnter, onLeave, onStay, otherShapeId)
+	local vehicle = g_currentMission.nodeToVehicle[otherId];
+	if onEnter then
+		self.rentVehiclesModVehiclesInTrigger[vehicle] = true;
+	elseif onLeave then
+		self.rentVehiclesModVehiclesInTrigger[vehicle] = nil;
+	end;
+	return sellTriggerCallback(self, triggerId, otherId, onEnter, onLeave, onStay, otherShapeId);
+end;
