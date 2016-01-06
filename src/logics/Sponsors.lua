@@ -17,7 +17,7 @@ AgroSpManager = {}
 AgroSpManager.sponsors = {}
 
 -- the possibility (a percentage) of the player receives a sponsorship in the day.
-SponsorChance = 15
+SponsorChance = 11
 
 local AgroSpManager_mt = Class(AgroSpManager);
 

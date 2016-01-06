@@ -17,7 +17,7 @@ AgroSponsor = {}
 AgroSponsor.ModInstallDir = g_currentModDirectory;
 AgroSponsor.saveGameDir = ''
 AgroSponsor.gameIsSaved = 0
-
+AgroSponsor.spSelDayCount = 0;
 
 -- Load the Dependencies
 source(AgroSponsor.ModInstallDir .. 'logics/Messages.lua')
@@ -41,7 +41,7 @@ function AgroSponsor:loadMap(name)
 	-- Debug 
 	print('[AgroSponsor] Save directory ' .. self.saveGameDir);
 	print('[AgroSponsor] Save file ' .. AgroSponsor.firstLoadFile);
-	
+		
 	-- Load the Clock
 	asClock:init();
 	
@@ -51,6 +51,9 @@ function AgroSponsor:loadMap(name)
 	-- Load the Sponsor List
 	AgroSpManager:load();
 	
+	-- Load all the rents 
+	AgroRentManager:load();
+	
 	-- Load the GUIs
 	self:loadGUI();
 	
@@ -58,8 +61,12 @@ function AgroSponsor:loadMap(name)
 	AgroShell:load();
 	
 	-- Add the Sponsor List to be reload every day in the game 
-	asClock:registerNewDayEvent('asSponsorList', AgroSponsor.loadSponsorSelection());
+	asClock:registerNewDayEvent('asSponsorList', AgroSponsor.loadSponsorSelectionEvent);
+	asClock:registerNewDayEvent('asRent', AgroSponsor.checkRents);
 	
+	-- Load the Sponsor List 
+	 AgroSponsor:loadSponsorSelection();
+		
 	-- Add huds to event listener 
 	addModEventListener(hudSponsors);
 
@@ -69,10 +76,23 @@ function AgroSponsor:loadMap(name)
 	print('[AgroSponsor] Loaded ')
 end;
 
+function AgroSponsor:checkRents()
+	AgroRentManager:checkRents();
+end 
+
+function AgroSponsor:loadSponsorSelectionEvent()
+	AgroSponsor.spSelDayCount = AgroSponsor.spSelDayCount + 1;
+	
+	if AgroSponsor.spSelDayCount == 5 then -- Do it every 5 days 
+		AgroSponsor:loadSponsorSelection();
+		AgroSponsor.spSelDayCount = 0;
+	end 
+end
+
 function AgroSponsor:loadSponsorSelection()
 	local spList = AgroSpManager:buildSponsorList();	
 	-- Load the Sponsor Huds
-	hudSponsors:init(spList);
+	hudSponsors:init(spList);	 
 end 
 
 function AgroSponsor:checkDirectory()
@@ -171,9 +191,10 @@ function AgroSponsor:deleteMap()
 end;
 
 function AgroSponsor:autoSave()
-	if AgroSpManager:isGameSaved() then	
+	if AgroSponsor:isGameSaved() then	
 		 AgroPlayerProfile:autoSave();
 		 AgroSpManager:autoSave();
+		 AgroRentManager:autoSave();
 	end;
 end;
 

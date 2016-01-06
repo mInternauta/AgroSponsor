@@ -26,5 +26,9 @@
 		<text name="AGROSPONSOR_RENTEQ" text="Equipment" />
 		<text name="AGROSPONSOR_RENTEXPTIP" text="Experience Points" />
 		<text name="AGROSPONSOR_RENTPRICETIP" text="Daily Price" />
+		<text name="AGROSPONSOR_RENT" text="Rent" />
+		<text name="AGROSPONSOR_RENTHISTORY" text="History" />
+		<text name="AGROSPONSOR_RENTMSG" text="Congratulations! You rented the equipment /NAME for /PRICE, the amount will be withdrawn daily from your account, if you dont have the value the equipment will be automatically removed. /LF You can give back it through the menu. /LF The equipment was delivered to your farm." />
+		<text name="AGROSPONSOR_RENTEXPIRED" text="The Rent of /NAME was expired because you dont have the daily value. The equipment was returned." />
 	</texts>
 </l10n>

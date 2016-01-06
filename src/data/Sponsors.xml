@@ -4,15 +4,15 @@
 		jcb|itrunner|newholland|bergmann|case|farmtech|grimme|hurlimann|kemper|krone
 	</Avaliable>
 	<Items>
-		<jcb title="JCB" maxShip="2285" maxReward="105000" image="img/jcb.jpg" />
-		<itrunner  title="ITRunner" maxShip="3585" maxReward="95500" image="img/itrunner.jpg" />
-		<newholland title="New Holland" maxShip="2385" maxReward="108200" image="img/newholland.jpg" />
-		<bergmann title="Bergmann" maxShip="2085" maxReward="120890" image="img/bergmann.jpg" />
-		<case title="Case" maxShip="3785" maxReward="90250" image="img/case.jpg" />
-		<farmtech title="Farmtech" maxShip="3485" maxReward="106500" image="img/farmtech.jpg" />
-		<grimme title="Grimme" maxShip="2345" maxReward="109200" image="img/grimme.jpg" />
-		<hurlimann title="Hürlimann" maxShip="2245" maxReward="120200" image="img/hurlimann.jpg" />
-		<kemper title="Kemper" maxShip="3445" maxReward="107200" image="img/kemper.jpg" />
-		<krone title="Krone" maxShip="2905" maxReward="108540" image="img/krone.jpg" />
+		<jcb title="JCB" maxShip="785" maxReward="105000" image="img/jcb.jpg" />
+		<itrunner  title="ITRunner" maxShip="985" maxReward="95500" image="img/itrunner.jpg" />
+		<newholland title="New Holland" maxShip="780" maxReward="108200" image="img/newholland.jpg" />
+		<bergmann title="Bergmann" maxShip="605" maxReward="120890" image="img/bergmann.jpg" />
+		<case title="Case" maxShip="1050" maxReward="90250" image="img/case.jpg" />
+		<farmtech title="Farmtech" maxShip="1008" maxReward="106500" image="img/farmtech.jpg" />
+		<grimme title="Grimme" maxShip="760" maxReward="109200" image="img/grimme.jpg" />
+		<hurlimann title="Hürlimann" maxShip="680" maxReward="120200" image="img/hurlimann.jpg" />
+		<kemper title="Kemper" maxShip="980" maxReward="107200" image="img/kemper.jpg" />
+		<krone title="Krone" maxShip="700" maxReward="108540" image="img/krone.jpg" />
 	</Items>
 </Sponsors>

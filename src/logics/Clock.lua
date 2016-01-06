@@ -24,9 +24,9 @@ end
 function asClock:update(env)
 	self.lastHour = math.floor(env.dayTime / (1000 * 60 * 60));
 	
-	if self.lastHour >= 0 and self.lastHour <= 1 and self.newDayDispatched == false then
-		asClock:dispatchNewDay();
+	if self.lastHour >= 0 and self.lastHour <= 1 and self.newDayDispatched == false then		
 		self.newDayDispatched = true;
+		asClock:dispatchNewDay();
 	end 
 	
 	if self.lastHour > 1 and self.lastHour <= 23 and self.newDayDispatched then

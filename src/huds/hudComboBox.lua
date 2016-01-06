@@ -13,6 +13,7 @@
 -- You should have received a copy of the GNU General Public License
 -- along with this program; if not, write to the Free Software
 -- Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+if AgroComboBox == nil then 
 AgroComboBox = {};
 AgroComboBox.__index  = AgroComboBox;
 local AgroComboBox_mt = Class(AgroComboBox);
@@ -189,3 +190,4 @@ function AgroComboBox:getSelected()
 		return nil;
 	end 
 end 
+end

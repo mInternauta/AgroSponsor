@@ -16,6 +16,8 @@
 AgroRentMenuHud = {};
 
 source(AgroSponsor.ModInstallDir .. 'huds/hudComboBox.lua')
+source(AgroSponsor.ModInstallDir .. 'huds/hudPageTab.lua')
+source(AgroSponsor.ModInstallDir .. 'huds/hudButton.lua')
 
 -- Initialize the Menu
 function AgroRentMenuHud:init() 	
@@ -25,10 +27,30 @@ function AgroRentMenuHud:init()
 	self.spoOverlay = createImageOverlay(Utils.getFilename('img/sponsored.png', AgroSponsor.ModInstallDir));
 
 	-- Categories ComboBox
-	self.cbCategories = createComboBox(0.21,0.70);
+	self.cbCategories = createComboBox(0.21,0.665);
 	
 	-- Items ComboBox
-	self.cbItems = createComboBox(0.40,0.70);
+	self.cbItems = createComboBox(0.40,0.665);
+	
+	-- Page Tab
+	self.tbMenu = createPageTab(0.21, 0.20, 0.52, 0.53);
+	
+	-- Add the Tabs 
+	self.tbMenu:add('tbRent',  as.utils.getText('AGROSPONSOR_RENT'), AgroRentMenuHud._renderRentMenu);
+	self.tbMenu:add('tbHistory',  as.utils.getText('AGROSPONSOR_RENTHISTORY'), AgroRentMenuHud._renderRentHist);
+	
+	-- Rent Button
+	self.btnRent = createButton(0.62, 0.285);
+	self.btnRent:setTitle(as.utils.getText('AGROSPONSOR_RENT'));
+	
+	local rentHandler = function (btn)
+		if btn:getMyTag() ~= nil then 
+			local data = btn:getMyTag();
+			AgroRentMenuHud:onRentItem(data);
+		end 
+	end 
+	
+	self.btnRent:bindOnClick('Click', rentHandler);
 	
 	-- Build the Categories List 
 	for catId, cat in pairs(StoreItemsUtil.storeCategories) do 
@@ -46,9 +68,18 @@ function AgroRentMenuHud:init()
 	self:onCategoryChange();
 	self:onItemChange();
 	
+	-- set the default page 
+	self.tbMenu:setSelected('tbRent');
+	
 	-- set default visibility
 	self.visible = false;
 	self.myTitle = as.utils.getText('AGROSPONSOR_RENTTITLE');
+end 
+
+function AgroRentMenuHud:onRentItem(item)
+	--as.utils.print_r(item);
+	
+	AgroRentManager:rent(item);
 end 
 
 function AgroRentMenuHud:onCategoryChangeEvent()
@@ -77,6 +108,7 @@ function AgroRentMenuHud:onItemChange()
 	self.selectedItem = AgroRentManager:create(id);
 	
 	self.curImgOverlay = createImageOverlay(self.selectedItem['Store']['imageActive']);
+	self.btnRent:setMyTag(self.selectedItem);
 	
 --	as.utils.print_r(self.selectedItem);
 end 
@@ -85,6 +117,7 @@ function AgroRentMenuHud:show()
 	self.visible = true;
 	self.cbCategories:show();
 	self.cbItems:show();
+	self.tbMenu:show();
 end 
 
 function AgroRentMenuHud:hide()
@@ -92,6 +125,8 @@ function AgroRentMenuHud:hide()
 	
 	self.cbCategories:hide();
 	self.cbItems:hide();
+	self.tbMenu:hide();
+	self.btnRent:hide();
 	
 	-- DISABLE the mouse 
 	asMouseHud:setEnabled(false);
@@ -108,16 +143,7 @@ function AgroRentMenuHud:draw()
 		renderOverlay(self.backOverlay, 0.2, 0.2, 0.62, 0.63);			
 				
 		-- Render the title
-		renderText(0.205, 0.795, 0.022, self.myTitle);
-		
-		setTextColor(0,0,0, 1);
-		setTextBold(true);
-		
-		renderText(0.21, 0.745, 0.018, as.utils.getText('AGROSPONSOR_RENTBRAND'));
-		renderText(0.40, 0.745, 0.018, as.utils.getText('AGROSPONSOR_RENTEQ'));
-		
-		setTextColor(1,1,1, 1);
-		setTextBold(false);
+		renderText(0.205, 0.795, 0.022, self.myTitle);	
 		
 		-- QUIT
 		renderText(0.205, 0.21, 0.018, as.utils.getText('AGROSPONSOR_EXITKEY'));
@@ -128,45 +154,85 @@ function AgroRentMenuHud:draw()
 		-- Price Tip
 		renderText(0.461, 0.22, 0.018, as.utils.getText('AGROSPONSOR_RENTPRICETIP'));
 		
-		-- ComboBox
-		self.cbCategories:draw();
-		self.cbItems:draw();
+		self.btnRent:hide();
 		
-		if self.selectedItem ~= nil then 
-			-- Render the items overlay		
-			renderOverlay(self.backItemOverlay, 0.3, 0.26, 0.44, 0.40);
-			renderOverlay(self.curImgOverlay, 0.32, 0.382, 0.16, 0.20);
-			
-			-- Render the Prize
-			renderText(0.36, 0.305, 0.022, as.utils.toMoneyString(self.selectedItem['Price']));
-			
-			-- Render the Experience points
-			renderText(0.46, 0.305, 0.022, tostring(self.selectedItem['Exp']));
-			
-			-- Render the sponsored icon 
-			if self.selectedItem['IsSponsored'] then 				
-				renderOverlay(self.spoOverlay, 0.45, 0.362, 0.028, 0.04);
-				
-				setTextColor(0.8,0,0, 1)
-				renderText(0.6, 0.585, 0.020, 'Sponsored');
-				setTextColor(1,1,1, 1)
-			end 
-			
-			-- Render the brand and the name 
-			setTextColor(0,0,0, 1);
-			renderText(0.5, 0.605, 0.028, self.selectedItem['Store']['brand']);
-			renderText(0.5, 0.585, 0.022, self.selectedItem['Store']['name']);
-						
-			-- Render the equipament specs
-			
-			
-			setTextColor(1,1,1, 1);
-		end 
+		-- Render the Page Tab
+		self.tbMenu:draw();
 		
 		-- Enable the mouse 
 		asMouseHud:setEnabled(true);
+	else 
+		self.btnRent:hide();
 	end
 end 
+
+function AgroRentMenuHud:_renderRentHist()
+	AgroRentMenuHud:renderRentHist();
+end 
+
+function AgroRentMenuHud:renderRentHist()
+	-- Render Rent History
+	setTextColor(0,0,0, 1);
+	setTextBold(true);
+	
+	renderText(0.21, 0.708, 0.022, as.utils.getText('AGROSPONSOR_RENTHISTORY'));
+	
+	setTextColor(1,1,1, 1);
+	setTextBold(false);
+end 
+
+function AgroRentMenuHud:_renderRentMenu()
+	AgroRentMenuHud:renderRentMenu();
+end 
+
+function AgroRentMenuHud:renderRentMenu()
+	-- Render Rent Menu
+	setTextColor(0,0,0, 1);
+	setTextBold(true);
+	
+	renderText(0.21, 0.708, 0.018, as.utils.getText('AGROSPONSOR_RENTBRAND'));
+	renderText(0.40, 0.708, 0.018, as.utils.getText('AGROSPONSOR_RENTEQ'));
+	
+	setTextColor(1,1,1, 1);
+	setTextBold(false);
+	
+	-- ComboBox
+	self.cbCategories:draw();
+	self.cbItems:draw();
+	
+	-- Button
+	if g_currentMission.missionStats.money > self.selectedItem['Price'] then 
+		self.btnRent:show();
+	end 
+	
+	if self.selectedItem ~= nil then 
+		-- Render the items overlay		
+		renderOverlay(self.backItemOverlay, 0.3, 0.26, 0.44, 0.40);
+		renderOverlay(self.curImgOverlay, 0.32, 0.382, 0.16, 0.20);
+		
+		-- Render the Prize
+		renderText(0.36, 0.305, 0.022, as.utils.toMoneyString(self.selectedItem['Price']));
+		
+		-- Render the Experience points
+		renderText(0.46, 0.305, 0.022, tostring(self.selectedItem['Exp']));
+		
+		-- Render the sponsored icon 
+		if self.selectedItem['IsSponsored'] then 				
+			renderOverlay(self.spoOverlay, 0.45, 0.362, 0.028, 0.04);
+			
+			setTextColor(0.8,0,0, 1)
+			renderText(0.6, 0.585, 0.020, 'Sponsored');
+			setTextColor(1,1,1, 1)
+		end 
+		
+		-- Render the brand and the name 
+		setTextColor(0,0,0, 1);
+		renderText(0.5, 0.605, 0.028, self.selectedItem['Store']['brand']);
+		renderText(0.5, 0.585, 0.022, self.selectedItem['Store']['name']);
+							
+		setTextColor(1,1,1, 1);
+	end 
+end
 
 function AgroRentMenuHud:deleteMap()	
 end;
