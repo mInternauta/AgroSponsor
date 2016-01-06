@@ -30,5 +30,10 @@
 		<text name="AGROSPONSOR_RENTHISTORY" text="History" />
 		<text name="AGROSPONSOR_RENTMSG" text="Congratulations! You rented the equipment /NAME for /PRICE, the amount will be withdrawn daily from your account, if you dont have the value the equipment will be automatically removed. /LF You can give back it through the menu. /LF The equipment was delivered to your farm." />
 		<text name="AGROSPONSOR_RENTEXPIRED" text="The Rent of /NAME was expired because you dont have the daily value. The equipment was returned." />
+		<text name="AGROSPONSOR_EXPIRED" text="Expired" />
+		<text name="AGROSPONSOR_ACTIVATED" text="Activated" />
+		<text name="AGROSPONSOR_NAME" text="Name" />
+		<text name="AGROSPONSOR_PRICE" text="Price" />
+		<text name="AGROSPONSOR_STATE" text="State" />
 	</texts>
 </l10n>

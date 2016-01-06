@@ -30,6 +30,11 @@
 		<text name="AGROSPONSOR_RENTHISTORY" text="Histórico" />		
 		<text name="AGROSPONSOR_RENTMSG" text="Parabéns! Você alugou o equipamento /NAME por /PRICE, o valor será cobrado todo o dia, se caso você não tiver o valor o equipamento será automaticamente removido. /LF Você pode devolve-lo atráves do menu. /LF O Equipamento foi entregue na sua fazenda." />
 		<text name="AGROSPONSOR_RENTEXPIRED" text="O Aluguel do Equipamento /NAME expirou pois você não possui o valor diário. O Equipamento foi devolvido." />
+		<text name="AGROSPONSOR_EXPIRED" text="Expirado" />
+		<text name="AGROSPONSOR_ACTIVATED" text="Ativado" />
+		<text name="AGROSPONSOR_NAME" text="Nome" />
+		<text name="AGROSPONSOR_PRICE" text="Valor" />
+		<text name="AGROSPONSOR_STATE" text="Estado" />
 	</texts>
 </l10n>
 

@@ -18,6 +18,7 @@ AgroRentMenuHud = {};
 source(AgroSponsor.ModInstallDir .. 'huds/hudComboBox.lua')
 source(AgroSponsor.ModInstallDir .. 'huds/hudPageTab.lua')
 source(AgroSponsor.ModInstallDir .. 'huds/hudButton.lua')
+source(AgroSponsor.ModInstallDir .. 'huds/hudGrid.lua')
 
 -- Initialize the Menu
 function AgroRentMenuHud:init() 	
@@ -52,6 +53,26 @@ function AgroRentMenuHud:init()
 	
 	self.btnRent:bindOnClick('Click', rentHandler);
 	
+	-- History Grid 
+	self.grdRents = createGrid(0.21, 0.20);
+
+	-- Build the Columns 
+	local rdText = function(dataId, dataSourceItem, posX, posY)
+		return AgroGrid:renderText(dataSourceItem, posX, posY, 0.020);		
+	end 
+	
+	local grdRentRdButton = function(dataId, dataSourceItem, posX, posY)
+		
+	end 
+	
+	self.grdRents.addColumn("Name", as.utils.getText('AGROSPONSOR_NAME'), rdText);
+	self.grdRents.addColumn("Price", as.utils.getText('AGROSPONSOR_PRICE'), rdText);
+	self.grdRents.addColumn("Expired", as.utils.getText('AGROSPONSOR_STATE'), rdText);
+	self.grdRents.addColumn("ID", "-", grdRentRdButton);
+	
+	-- Build Data
+	self:updateRentGrid();
+	
 	-- Build the Categories List 
 	for catId, cat in pairs(StoreItemsUtil.storeCategories) do 
 		-- Exclude Sales, Animals and Placeables store items from the list
@@ -74,6 +95,22 @@ function AgroRentMenuHud:init()
 	-- set default visibility
 	self.visible = false;
 	self.myTitle = as.utils.getText('AGROSPONSOR_RENTTITLE');
+end 
+
+function AgroRentMenuHud:updateRentGrid()
+	local data = {}
+	for rentId, rent in pairs(AgroRentManager.Rents) do 
+		data["Name"] = rent["Name"]
+		
+		if rent["Expired"] then 
+			data["Expired"] = as.utils.getText('AGROSPONSOR_EXPIRED');
+		else 
+			data["Expired"] = as.utils.getText('AGROSPONSOR_ACTIVATED');
+		end 
+		
+		data["Price"] = rent["Price"]
+	end 
+	self.grdRents:setDataSource(data);
 end 
 
 function AgroRentMenuHud:onRentItem(item)
@@ -135,6 +172,7 @@ end
 function AgroRentMenuHud:update(dt) 	 
 	self.cbCategories:update();
 	self.cbItems:update();
+	self:updateRentGrid();
 end 
 
 function AgroRentMenuHud:draw()
