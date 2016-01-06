@@ -59,13 +59,20 @@ function AgroGrid:init()
 end 
 
 -- Column Functions
-function AgroGrid:addColumn(dataId, title)
+-- renderFunc = function(dataId, dataSourceItem, posX, posY)
+-- 	return weight, height 
+-- end 
+function AgroGrid:addColumn(dataId, title, renderFunc)
 	self.Columns[dataId] = {}
 	self.Columns[dataId]["ID"] = dataId;
 	self.Columns[dataId]["Title"] = title;
+	self.Columns[dataId]["Render"] = renderFunc;
 end 
 
 -- DataSource Functions 
+function AgroGrid:setDataSource(dataSource)
+	self.DataSource = dataSource;
+end 
 
 function AgroGrid:show()
 	self.visible = true;
@@ -94,6 +101,33 @@ function AgroGrid:draw()
 		-- Render the Back
 		renderOverlay(self.backOverlay, self.posX, self.posY, 0.4, 0.2);
 		
+		-- Render the Columns 
+		local cIndex = 0;
+		local cWidth, cHeight;
+		
+		for dataId, item in pairs(self.Columns) do 
+			local lineX = self.posX + 0.01 + (cIndex * 0.06);
+		
+			-- Render all current column lines 
+			for i=self.currentBeginIndex, self.currentEndIndex do 
+				local cData = self.DataSource[i];
+				local cLine = cData[dataId];
+				local cRender = item['Render'];
+				
+				if cLine ~= nil then 
+					local lineY = ((self.posY + 0.4) - (0.1 + (cIndex * 0.02)));				
+					
+					cWidth, cHeight = cRender(dataId, cLine, self.posX + 0.01, lineY);
+				end 
+			end 
+		
+			-- Render the Column Title 
+			setTextColor(0,0,0, 1);
+			renderText(lineX, self.posY + 0.4, 0.028, item['Title']);							
+			setTextColor(1,1,1, 1);
+			
+			cIndex = cIndex + 1;
+		end 
 	end 
 end 
 
