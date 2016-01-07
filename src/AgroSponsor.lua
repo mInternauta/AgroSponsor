@@ -176,6 +176,8 @@ function AgroSponsor:update(dt)
 		-- Auto save the Sponsor
 		AgroSpManager:autoSave();
 	end;
+	
+	AgroRentManager:update();
 end; 
 
 function AgroSponsor:keyEvent(unicode, sym, modifier, isDown)

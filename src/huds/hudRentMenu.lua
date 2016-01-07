@@ -54,7 +54,8 @@ function AgroRentMenuHud:init()
 	self.btnRent:bindOnClick('Click', rentHandler);
 	
 	-- History Grid 
-	self.grdRents = createGrid(0.21, 0.20);
+	self.grdRents = createGrid(0.23, 0.265);	
+	self.grdRentsButtons = {};
 
 	-- Build the Columns 
 	local rdText = function(dataId, dataSourceItem, posX, posY)
@@ -62,13 +63,17 @@ function AgroRentMenuHud:init()
 	end 
 	
 	local grdRentRdButton = function(dataId, dataSourceItem, posX, posY)
-		
+		local button = AgroRentMenuHud.grdRentsButtons[dataSourceItem];
+		button:setPosition(posX, posY - 0.006);
+		button:render();
 	end 
+		
+	self.grdRents:addColumn("Expired", as.utils.getText('AGROSPONSOR_STATE'), rdText);
+	self.grdRents:addColumn("Price", as.utils.getText('AGROSPONSOR_PRICE'), rdText);
+	self.grdRents:addColumn("Name", as.utils.getText('AGROSPONSOR_NAME'), rdText);
+	self.grdRents:addColumn("ID", "-", grdRentRdButton);
 	
-	self.grdRents.addColumn("Name", as.utils.getText('AGROSPONSOR_NAME'), rdText);
-	self.grdRents.addColumn("Price", as.utils.getText('AGROSPONSOR_PRICE'), rdText);
-	self.grdRents.addColumn("Expired", as.utils.getText('AGROSPONSOR_STATE'), rdText);
-	self.grdRents.addColumn("ID", "-", grdRentRdButton);
+	self.grdRents:setPaddingY(0.012);
 	
 	-- Build Data
 	self:updateRentGrid();
@@ -100,22 +105,44 @@ end
 function AgroRentMenuHud:updateRentGrid()
 	local data = {}
 	for rentId, rent in pairs(AgroRentManager.Rents) do 
-		data["Name"] = rent["Name"]
+		data[rentId] = {}
+		data[rentId]["Name"] = rent["Name"]
+		data[rentId]["Price"] = as.utils.toMoneyString(rent["Price"])
+		data[rentId]["ID"] = rentId;
 		
-		if rent["Expired"] then 
-			data["Expired"] = as.utils.getText('AGROSPONSOR_EXPIRED');
-		else 
-			data["Expired"] = as.utils.getText('AGROSPONSOR_ACTIVATED');
+		-- Add the Buttom
+		if self.grdRentsButtons[rentId] == nil then 
+			self.grdRentsButtons[rentId] = createButton(0.1, 0.1);
+			self.grdRentsButtons[rentId]:setAutoDraw(false);
+			self.grdRentsButtons[rentId]:setTitle(as.utils.getText('AGROSPONSOR_GIVEBACK'));
+			self.grdRentsButtons[rentId]:setSize(0.06, 0.03, 0.018);			
+			
+			local onClickGiveBack = function(btn)
+				if btn:getMyTag() ~= nil then 
+					AgroRentMenuHud:onUnRentItem(btn:getMyTag());
+				end 
+			end 
+			
+			self.grdRentsButtons[rentId]:bindOnClick("unRentClick", onClickGiveBack);
 		end 
-		
-		data["Price"] = rent["Price"]
+				
+		if rent["Expired"] then 
+			data[rentId]["Expired"] = as.utils.getText('AGROSPONSOR_EXPIRED');
+			self.grdRentsButtons[rentId]:hide();
+		else 
+			data[rentId]["Expired"] = as.utils.getText('AGROSPONSOR_ACTIVATED');
+			self.grdRentsButtons[rentId]:show();
+			self.grdRentsButtons[rentId]:setMyTag(rentId);
+		end 
 	end 
 	self.grdRents:setDataSource(data);
 end 
 
+function AgroRentMenuHud:onUnRentItem(rentId)
+	AgroRentManager:remove(rentId);
+end 
+
 function AgroRentMenuHud:onRentItem(item)
-	--as.utils.print_r(item);
-	
 	AgroRentManager:rent(item);
 end 
 
@@ -142,12 +169,13 @@ end
 
 function AgroRentMenuHud:onItemChange()
 	local id = self.cbItems:getSelected();
-	self.selectedItem = AgroRentManager:create(id);
 	
-	self.curImgOverlay = createImageOverlay(self.selectedItem['Store']['imageActive']);
-	self.btnRent:setMyTag(self.selectedItem);
-	
---	as.utils.print_r(self.selectedItem);
+	if id ~= nil then 
+		self.selectedItem = AgroRentManager:create(id);
+		
+		self.curImgOverlay = createImageOverlay(self.selectedItem['Store']['imageActive']);
+		self.btnRent:setMyTag(self.selectedItem);	
+	end 
 end 
 
 function AgroRentMenuHud:show()
@@ -155,6 +183,8 @@ function AgroRentMenuHud:show()
 	self.cbCategories:show();
 	self.cbItems:show();
 	self.tbMenu:show();
+	
+	AgroRentMenuHud:onItemChange();
 end 
 
 function AgroRentMenuHud:hide()
@@ -164,6 +194,7 @@ function AgroRentMenuHud:hide()
 	self.cbItems:hide();
 	self.tbMenu:hide();
 	self.btnRent:hide();
+	self.grdRents:hide();
 	
 	-- DISABLE the mouse 
 	asMouseHud:setEnabled(false);
@@ -193,6 +224,7 @@ function AgroRentMenuHud:draw()
 		renderText(0.461, 0.22, 0.018, as.utils.getText('AGROSPONSOR_RENTPRICETIP'));
 		
 		self.btnRent:hide();
+		self.grdRents:hide();
 		
 		-- Render the Page Tab
 		self.tbMenu:draw();
@@ -201,6 +233,7 @@ function AgroRentMenuHud:draw()
 		asMouseHud:setEnabled(true);
 	else 
 		self.btnRent:hide();
+		self.grdRents:hide();
 	end
 end 
 
@@ -217,6 +250,9 @@ function AgroRentMenuHud:renderRentHist()
 	
 	setTextColor(1,1,1, 1);
 	setTextBold(false);
+	
+	-- Enable the Grid
+	self.grdRents:show();
 end 
 
 function AgroRentMenuHud:_renderRentMenu()

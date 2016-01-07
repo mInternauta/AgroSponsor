@@ -15,7 +15,7 @@
 -- Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 if AgroGrid == nil then 
 AgroGrid = {};
-AgroGrid.__index  = AgroButton;
+AgroGrid.__index  = AgroGrid;
 local AgroGrid_mt = Class(AgroGrid);
 
 AgroGrid.LineH = 0.04;
@@ -44,9 +44,9 @@ function AgroGrid:init()
 	self.DataSource = {}
 	
 	-- Item Index
-	self.maxItemPerView = 8;
+	self.maxItemPerView = 10;
 	self.currentBeginIndex = 0;
-	self.currentEndIndex = 8;
+	self.currentEndIndex = 10;
 	
 	-- Overlays
 	self.backOverlay = createImageOverlay(Utils.getFilename('img/gridOverlay.png', AgroSponsor.ModInstallDir));	
@@ -61,6 +61,8 @@ function AgroGrid:init()
 	self.upPosY = self.posY + 0.2;	
 	self.downPosX = self.posX + 0.5;
 	self.downPosY = self.posY + 0.04;
+	
+	self.eSpY = 0;
 	
 	self.hvX = 0;
 	self.hvY = 0;
@@ -86,6 +88,30 @@ function AgroGrid:setDataSource(dataSource)
 	self.DataSource = dataSource;
 end 
 
+function AgroGrid:GoUp()
+	if self.currentBeginIndex > 0 then 
+		self.currentBeginIndex = self.currentBeginIndex - 1;
+		self.currentEndIndex = self.currentEndIndex - 1;
+		
+		if self.currentEndIndex < self.maxItemPerView then 
+			self.currentEndIndex = self.maxItemPerView;
+		end 
+	end 
+end
+
+function AgroGrid:GoDown()
+	local count = as.tables.len(self.DataSource);
+	
+	if self.currentEndIndex < count then 
+		self.currentBeginIndex = self.currentBeginIndex + 1;
+		self.currentEndIndex = self.currentEndIndex + 1;
+	end 
+end 
+
+function AgroGrid:setPaddingY(y)
+	self.eSpY = y;
+end 
+
 function AgroGrid:show()
 	self.visible = true;
 end 
@@ -98,10 +124,10 @@ function AgroGrid:setPosition(x,y)
 	self.posX = x;
 	self.posY = y;
 	
-	self.upPosX = self.posX + 0.5;
-	self.upPosY = self.posY + 0.2;	
-	self.downPosX = self.posX + 0.5;
-	self.downPosY = self.posY + 0.04;
+	self.upPosX = self.posX + 0.5403;
+	self.upPosY = self.posY + 0.355;	
+	self.downPosX = self.posX + 0.5403;
+	self.downPosY = self.posY + 0.01;
 end 
 
 function AgroGrid:update(dt)
@@ -127,8 +153,8 @@ function AgroGrid:renderText(text, posX, posY, size)
 	renderText(posX, posY, size, text);							
 	setTextColor(1,1,1, 1);
 	
-	local tW = getTextWidth(0.020, dataSourceItem);
-	local tH = getTextHeight(0.020, dataSourceItem);
+	local tW = getTextWidth(size, text);
+	local tH = getTextHeight(size, text);
 	
 	return tW, tH
 end 
@@ -136,7 +162,7 @@ end
 function AgroGrid:draw()
 	if self.visible then 
 		-- Render the Back
-		renderOverlay(self.backOverlay, self.posX, self.posY, 0.4, 0.2);
+		renderOverlay(self.backOverlay, self.posX, self.posY, 0.5613, 0.4289);
 		
 		-- Render the Columns 
 		local cIndex = 0;
@@ -145,24 +171,34 @@ function AgroGrid:draw()
 		cWidth = 0
 		
 		for dataId, item in pairs(self.Columns) do 
-			local lineX = self.posX + 0.01 + (cIndex * 0.06);
+			local lineX = self.posX + 0.01 + (cIndex * 0.128);
 		
 			-- Render all current column lines 
-			for i=self.currentBeginIndex, self.currentEndIndex do 
-				local cData = self.DataSource[i];
-				local cLine = cData[dataId];
-				local cRender = item['Render'];
-				
-				if cLine ~= nil then 
-					local lineY = ((self.posY + 0.4) - (0.1 + (cIndex * 0.02)));				
+			if self.DataSource ~= nil then 
+				for dataSrcItemID, cData in pairs(self.DataSource) do					
+					local index = as.tables.getKeyIndex(dataSrcItemID, self.DataSource);
+					local tIndex = index - self.currentBeginIndex;
 					
-					cWidth, cHeight = cRender(dataId, cLine, lineX + cHeight, lineY);
+					local lineY = (self.posY + 0.335) - (tIndex * (0.02 + self.eSpY));
+				
+					if cData ~= nil and index >= self.currentBeginIndex and index <= self.currentEndIndex then 
+						local cLine = cData[dataId];
+						local cRender = item['Render'];
+												
+						if cLine ~= nil then 
+							cWidth, cHeight = cRender(dataId, cLine, lineX, lineY);
+						end 
+					end 
 				end 
 			end 
 		
 			-- Render the Column Title 
-			setTextColor(0,0,0, 1);
-			renderText(lineX, self.posY + 0.4, 0.028, item['Title']);							
+			setTextColor(1,1,1, 1);
+			setTextBold(true);
+			
+			renderText(lineX, self.posY + 0.39, 0.022, item['Title']);							
+			
+			setTextBold(false);
 			setTextColor(1,1,1, 1);
 			
 			cIndex = cIndex + 1;

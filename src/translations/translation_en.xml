@@ -15,7 +15,7 @@
 		<text name="AGROSPONSOR_MMSPONSOR" text="Change Sponsor" />
 		<text name="AGROSPONSOR_LEVEL" text="Level" />		
 		<text name="AGROSPONSOR_EXP" text="Exp Points" />
-		<text name="AGROSPONSOR_TIPNEWGAME" text="Thank you, New partner you earned 12 experience points. Access the main menu using the keys CTRL+M, you can change at any time the sponsor and you can view your profile." />
+		<text name="AGROSPONSOR_TIPNEWGAME" text="Thank you, New partner you earned 12 experience points. Access the main menu using the keys CTRL+M, you can change at any time the sponsor , you can view your profile and rent a new equipament!." />
 		<text name="AGROSPONSOR_TIPNEWGAME2" text="Every AgroSponsor partner has partnership levels higher the level, better is the reward you earn and the daily support. Besides best deals." />
 		<text name="AGROSPONSOR_TIPNEWGAME3" text="Find more help at: https://github.com/mInternauta/AgroSponsor" />
 		<text name="AGROSPONSOR_SPONSOR" text="Sponsor" />
@@ -35,5 +35,7 @@
 		<text name="AGROSPONSOR_NAME" text="Name" />
 		<text name="AGROSPONSOR_PRICE" text="Price" />
 		<text name="AGROSPONSOR_STATE" text="State" />
+		<text name="AGROSPONSOR_GIVEBACK" text="Give Back" />
+		<text name="AGROSPONSOR_LEVELUP" text="Congratulations, You have reached the level %s of sponsorship. Every level you have improved offers from sponsors and discount in equipment rental!" />
 	</texts>
 </l10n>

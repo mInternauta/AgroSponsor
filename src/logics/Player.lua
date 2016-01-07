@@ -23,7 +23,7 @@ AgroPlayerProfile.Profile = {};
 AS_PLAYER_RWFACTOR = 0.03;
 
 -- Amount of experience needed for next level
-AS_PLAYER_PLVEXP = 12;
+AS_PLAYER_PLVEXP = 32;
 
 local AgroPlayerProfile_mt = Class(AgroPlayerProfile);
 
@@ -32,7 +32,17 @@ source(AgroSponsor.ModInstallDir .. 'libs/tableSerializer.lua')
 
 -- Give Experience to the Player 
 function AgroPlayerProfile:giveExp(expCount)
+	local oldLevel = self:getLevel();
 	self.Profile.Exp = self.Profile.Exp + expCount;
+	
+	local newLevel = self:getLevel();
+	
+	if oldLevel < newLevel then 
+		local text = as.utils.getText('AGROSPONSOR_LEVELUP');
+		text = text:format(newLevel);
+		
+		AgroMessages:show(text, "Level Up!");
+	end 
 end
 
 -- Give Levels to The Player

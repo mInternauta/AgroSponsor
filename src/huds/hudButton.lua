@@ -50,10 +50,20 @@ function AgroButton:init()
 	self.posX = 0;
 	self.posY = 0;
 	self.clickEvents = {}
+	self.h = AgroButton.ButtonH;
+	self.w = AgroButton.ButtonW;
+	self.textSize = 0.022;
 	
 	-- set default visibility
 	self.visible = false;
 	self.isHoverButton = false;
+	self.autoDraw = true;
+end 
+
+function AgroButton:setSize(w, h, size)
+	self.h = h;
+	self.w = w;
+	self.textSize = size;
 end 
 
 function AgroButton:setTitle(title)
@@ -81,8 +91,12 @@ function AgroButton:getMyTag()
 	return self.myTag;
 end 
 
+function AgroButton:setAutoDraw(enabled)
+	self.autoDraw = enabled;
+end 
+
 function AgroButton:update(dt)
-	local isMouseInside = asMouseHud:isInsideOf(self.posX, self.posY, AgroButton.ButtonW, AgroButton.ButtonH);
+	local isMouseInside = asMouseHud:isInsideOf(self.posX, self.posY, self.w, self.h);
 	if isMouseInside then
 		self.isHoverButton = true;
 	else 
@@ -91,19 +105,25 @@ function AgroButton:update(dt)
 end 
 
 function AgroButton:draw()
+	if self.autoDraw  then 
+		self:render();
+	end 
+end 
+
+function AgroButton:render()
 	if self.visible then 
 		-- Render the Back
-		renderOverlay(self.backOverlay, self.posX, self.posY, AgroButton.ButtonW, AgroButton.ButtonH);
+		renderOverlay(self.backOverlay, self.posX, self.posY, self.w, self.h);
 		
 		-- Render the hover button 
 		if self.isHoverButton then 
-			renderOverlay(self.mOverlay, self.posX, self.posY, AgroButton.ButtonW, AgroButton.ButtonH);	
+			renderOverlay(self.mOverlay, self.posX, self.posY, self.w, self.h);	
 		end 
 		
 		-- Render the Text
 		setTextBold(true);
 
-		renderText(self.posX + 0.008, self.posY + 0.01, 0.022, self.Title);
+		renderText(self.posX + 0.004, self.posY + 0.01, self.textSize, self.Title);
 
 		setTextBold(false);
 	end 

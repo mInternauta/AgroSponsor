@@ -39,6 +39,20 @@ function as.tables.getKeyInIndex(index, tab)
 	return keyname;
 end 
 
+function as.tables.getKeyIndex(key, tab)
+	local indx = 0;
+	
+	for k,v in pairs(tab) do 
+		if k == key then
+			break;
+		else 
+			indx = indx + 1;
+		end 
+    end
+	
+	return indx;
+end 
+
 function as.utils.getText(key)
 	local text = g_i18n:getText(key);
 	

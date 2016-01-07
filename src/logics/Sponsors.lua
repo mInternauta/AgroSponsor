@@ -136,12 +136,12 @@ function AgroSpManager:buildSponsorList()
 			
 			-- Generate the Sponsor daily sponsorship
 			local maxSpShip = spData['MaxShip'];
-			local minSpShip = maxSpShip * 0.4;
+			local minSpShip = maxSpShip * (0.11 * AgroPlayerProfile:getLevel());
 			local spShip = math.ceil(math.random(minSpShip, maxSpShip));
 			
 			-- Generate the sponsor complete reward
 			local maxSpReward = spData['MaxReward'];
-			local minSpReward = maxSpReward * 0.32;
+			local minSpReward = maxSpReward * (0.16 * AgroPlayerProfile:getLevel());
 			local spReward = math.ceil(math.random(minSpReward, maxSpReward));
 			
 			-- Add the new value to sponsor data

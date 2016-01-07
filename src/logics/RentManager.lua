@@ -17,10 +17,10 @@ AgroRentManager = {}
 AgroRentManager.Rents = {}
 
 -- Constants
-AgroRentManager.percFromPrice = 0.020;
+AgroRentManager.percFromPrice = 0.028;
 AgroRentManager.percDescFromSponship = 0.015;
-AgroRentManager.percFromUpkeep = 0.025;
-AgroRentManager.percForExp = 0.0024;
+AgroRentManager.percFromUpkeep = 0.03;
+AgroRentManager.percForExp = 0.002;
 
 
 --- Load the Rents Data
@@ -93,6 +93,25 @@ function AgroRentManager:checkRents()
 			vehicle.asHasRent = false;
 			vehicle.asRent = nil; 
 		end 
+	end
+end 
+
+function AgroRentManager:update() 
+	for rentId, rent in pairs(self.Rents) do 
+		local activedRent = self.ActivedRents[rentId];
+		
+		if activedRent == nil then 
+			self.Rents[rentId]["Expired"] = true;
+		end 
+	end 
+end 
+
+function AgroRentManager:remove(rentId)
+	if self.ActivedRents[rentId] ~= nil then 
+		AgroRentManager:removeRent(rentId, self.ActivedRents[rentId]['Vehicle']);
+	else 	
+		-- Set the rent as deactivated 
+		self.Rents[rentID]['Expired'] = true;
 	end 
 end 
 
@@ -177,9 +196,14 @@ function AgroRentManager:create(storeId)
 			dailyPrice = dailyPrice - descPrice;
 		end 
 		
-		dailyPrice = math.ceil(dailyPrice);
+		dailyPrice = dailyPrice - (21 * AgroPlayerProfile:getLevel());
 		
-		local expPoints = math.ceil(dailyPrice * AgroRentManager.percForExp);
+		dailyPrice = math.ceil(dailyPrice);		
+		
+		local expPoints = dailyPrice * AgroRentManager.percForExp;
+		expPoints = (0.5 * AgroPlayerProfile:getLevel());
+		
+		expPoints = math.ceil(expPoints);
 		
 		rentItem["Store"] = storeItem;
 		rentItem["IsSponsored"] = isSponsorProduct;
