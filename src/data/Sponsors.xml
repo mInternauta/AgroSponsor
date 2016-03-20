@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <Sponsors>
 	<Avaliable>
-		jcb|itrunner|newholland|bergmann|case|farmtech|grimme|hurlimann|kemper|krone
+		jcb|itrunner|newholland|bergmann|case|farmtech|grimme|hurlimann|kemper|krone|holmer
 	</Avaliable>
 	<Items>
 		<jcb title="JCB" maxShip="785" maxReward="105000" image="img/jcb.jpg" />
@@ -14,5 +14,6 @@
 		<hurlimann title="Hürlimann" maxShip="680" maxReward="120200" image="img/hurlimann.jpg" />
 		<kemper title="Kemper" maxShip="980" maxReward="107200" image="img/kemper.jpg" />
 		<krone title="Krone" maxShip="700" maxReward="108540" image="img/krone.jpg" />
+		<holmer title="Holmer" maxShip="1010" maxReward="92200" image="img/holmer.jpg" />
 	</Items>
 </Sponsors>
