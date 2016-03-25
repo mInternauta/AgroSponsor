@@ -41,6 +41,7 @@ function AgroPlayerProfile:giveExp(expCount)
 		local text = as.utils.getText('AGROSPONSOR_LEVELUP');
 		text = text:format(newLevel);
 		
+		-- TODO: Convert to Multiplayer Support
 		AgroMessages:show(text, "Level Up!");
 	end 
 end
