@@ -23,6 +23,8 @@ local AgroSpManager_mt = Class(AgroSpManager);
 
 -- Dependencies
 source(AgroSponsor.ModInstallDir .. 'libs/tableSerializer.lua')
+source(AgroSponsor.ModInstallDir .. 'netevents/ASRewardEvent.lua')
+source(AgroSponsor.ModInstallDir .. 'netevents/ASRewardMessageEvent.lua')
 
 function AgroSpManager:rollReward()
 	local sponsor = AgroSpManager.Sponsor;
@@ -41,15 +43,21 @@ function AgroSpManager:rollReward()
 		reward = AgroPlayerProfile:calcReward(reward);
 		
 		if chance <= SponsorChance then
-			AgroMessages:showReward(reward, sponsor['Title']);
-			g_currentMission:addSharedMoney(reward, 'others');	
+		
+			--AgroMessages:showReward(reward, sponsor['Title']);			
+			--g_currentMission:addSharedMoney(reward, 'others');
+			
+			g_client:getServerConnection():sendEvent(ASRewardEvent:new(reward));			
+      g_client:getServerConnection():sendEvent(ASRewardMessageEvent:new(reward, sponsor['Title']));
 			
 			AgroSpManager.countReward = AgroSpManager.countReward + 1;
 		end
 		
 		ship = AgroPlayerProfile:calcReward(ship);
 		as.utils.printDebug("[Daily Sponsorship] " .. ship);
-		g_currentMission:addSharedMoney(ship, 'others');
+		
+		-- TODO: Convert to Multiplayer Support
+		g_client:getServerConnection():sendEvent(ASRewardEvent:new(ship));
 	end 
 	
 	as.utils.printDebug("[SPIN_METRIC] " .. AgroSpManager.countRewardSpin .. "|" .. AgroSpManager.countReward);
@@ -111,6 +119,7 @@ function AgroSpManager:saveSponsor(sponsor)
 	
 	if self.Sponsor == nil and sponsor ~= nil then
 		-- Show the Help Message
+		-- TODO: Convert to Multiplayer Support
 		local text = as.utils.getText('AGROSPONSOR_TIPNEWGAME') .. "\n\n" .. as.utils.getText('AGROSPONSOR_TIPNEWGAME2') .. "\n\n" .. as.utils.getText('AGROSPONSOR_TIPNEWGAME3');
 		AgroMessages:show(text, 'AgroSponsor');	
 		
