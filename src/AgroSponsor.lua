@@ -63,6 +63,7 @@ function AgroSponsor:loadMap(name)
 	-- Add the Sponsor List to be reload every day in the game 
 	asClock:registerNewDayEvent('asSponsorList', AgroSponsor.loadSponsorSelectionEvent);
 	asClock:registerNewDayEvent('asRent', AgroSponsor.checkRents);
+	asClock:registerNewDayEvent('asAutoSave', AgroSponsor.checkAndSave);
 	
 	-- Load the Sponsor List 
 	 AgroSponsor:loadSponsorSelection();
@@ -163,20 +164,22 @@ function AgroSponsor:checkIsSaved()
 	end 	
 end 
 
-function AgroSponsor:update(dt)
-	AgroSponsor:checkIsSaved();
+function AgroSponsor:checkAndSave()
+  AgroSponsor:checkIsSaved();
+  if AgroSpManager:isSponsorSaved() == false then 
+    -- Auto save the Sponsor
+    AgroSpManager:autoSave();
+  end;
+end;
+
+function AgroSponsor:update(dt)	
 	asClock:update(g_currentMission.environment);
 	
 	if not AgroSpManager:hasSponsorSelected() and hudSponsors:getIsCancelled() == false and hudSponsors:isVisible() == false then 
 		-- Render the Selection Hud 			
 		hudSponsors:show();
 	end
-
-	if AgroSpManager:isSponsorSaved() == false then 
-		-- Auto save the Sponsor
-		AgroSpManager:autoSave();
-	end;
-	
+		
 	AgroRentManager:update();
 end; 
 

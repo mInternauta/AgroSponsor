@@ -47,8 +47,9 @@ function AgroSpManager:rollReward()
 			--AgroMessages:showReward(reward, sponsor['Title']);			
 			--g_currentMission:addSharedMoney(reward, 'others');
 			
+			AgroMessages:showReward(reward, sponsor['Title']);     
 			g_client:getServerConnection():sendEvent(ASRewardEvent:new(reward));			
-      g_client:getServerConnection():sendEvent(ASRewardMessageEvent:new(reward, sponsor['Title']));
+      --g_client:getServerConnection():sendEvent(ASRewardMessageEvent:new(reward, sponsor['Title']));
 			
 			AgroSpManager.countReward = AgroSpManager.countReward + 1;
 		end
