@@ -24,7 +24,6 @@ local AgroSpManager_mt = Class(AgroSpManager);
 -- Dependencies
 source(AgroSponsor.ModInstallDir .. 'libs/tableSerializer.lua')
 source(AgroSponsor.ModInstallDir .. 'netevents/ASRewardEvent.lua')
-source(AgroSponsor.ModInstallDir .. 'netevents/ASRewardMessageEvent.lua')
 
 function AgroSpManager:rollReward()
 	local sponsor = AgroSpManager.Sponsor;
@@ -49,7 +48,6 @@ function AgroSpManager:rollReward()
 			
 			AgroMessages:showReward(reward, sponsor['Title']);     
 			g_client:getServerConnection():sendEvent(ASRewardEvent:new(reward));			
-      --g_client:getServerConnection():sendEvent(ASRewardMessageEvent:new(reward, sponsor['Title']));
 			
 			AgroSpManager.countReward = AgroSpManager.countReward + 1;
 		end

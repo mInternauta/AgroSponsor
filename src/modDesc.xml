@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="20">
-    <version>1.3</version>
+    <version>1.3a</version>
     <author>mInternauta</author>
     <title>
 		<en>AgroSponsor</en>        
@@ -8,25 +8,25 @@
 		<de>AgroSponsor</de>		
     </title>
     <iconFilename>agroSponsor.png</iconFilename>
-    <multiplayer supported="false"/>   
+    <multiplayer supported="true"/>   
 	<extraSourceFiles>
         <sourceFile filename="AgroSponsor.lua" />
     </extraSourceFiles>  
 	<description>
 		<en>
-<![CDATA[This mod adds a sponsors for your farm, 
+<![CDATA[This mod adds a sponsors for your farm 
 	every day in the morning you have the chance to win a sponsorship 
-	of AgroSponsors and its partners to purchase equipment and tools.]]>
+	of AgroSponsors and its partners to purchase equipment and tools]]>
 		</en>
 		<de>
-<![CDATA[This mod adds a sponsors for your farm, 
+<![CDATA[This mod adds a sponsors for your farm
 	every day in the morning you have the chance to win a sponsorship 
-	of AgroSponsors and its partners to purchase equipment and tools.]]>
+	of AgroSponsors and its partners to purchase equipment and tools]]>
 		</de>   
 		<br>
-<![CDATA[Este mod adiciona patrocionadores para a sua fazenda, 
+<![CDATA[Este mod adiciona patrocionadores para a sua fazenda 
 	Todo dia de manha você tem a chance de ganhar um patrocinio da
-	AgroSponsors e Parceiros para a compra de equipamentos e ferramentas novas!]]>
+	AgroSponsors e Parceiros para a compra de equipamentos e ferramentas novas]]>
 		</br>   
     </description>
 	<l10n filenamePrefix="translations/translation" />

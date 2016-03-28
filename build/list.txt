@@ -1,1 +1,1 @@
-..\src\* 
+D:\Marcelo\Projetos\AgroSponsor\trunk\src\* 

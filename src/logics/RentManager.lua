@@ -22,6 +22,7 @@ AgroRentManager.percDescFromSponship = 0.015;
 AgroRentManager.percFromUpkeep = 0.03;
 AgroRentManager.percForExp = 0.002;
 
+--source(AgroSponsor.ModInstallDir .. 'netevents/ASRemoveRentEvent.lua')
 
 --- Load the Rents Data
 function AgroRentManager:load()
@@ -78,7 +79,7 @@ function AgroRentManager:checkRents()
 			local vehicle = rentObj['Vehicle']
 			
 			if g_currentMission.missionStats.money > rentPrice then 	
-				g_currentMission:addSharedMoney(-rentPrice, "other");
+				g_client:getServerConnection():sendEvent(ASRewardEvent:new(-rentPrice))
 			else 
 				AgroRentManager:removeRent(rentID, vehicle);
 				
@@ -119,7 +120,11 @@ function AgroRentManager:removeRent(rentID, vehicle)
 	-- Set the rent as deactivated 
 	self.Rents[rentID]['Expired'] = true;
 
+  as.utils.printDebug("Removing vehicle:");
+  as.utils.print_r(vehicle);
+
 	g_currentMission:removeVehicle(vehicle, true);
+	
 	self.ActivedRents[rentID] = nil;
 end 
 
@@ -147,7 +152,7 @@ function AgroRentManager:rent(rentData)
 		AgroPlayerProfile:giveExp(rentExp);
 		
 		-- Remove the Money from the Player 
-		g_currentMission:addSharedMoney(-rentDailyValue, "other");
+		g_client:getServerConnection():sendEvent(ASRewardEvent:new(-rentDailyValue))
 		
 		as.utils.print_r(self.Rents);
 		
