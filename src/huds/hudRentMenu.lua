@@ -51,6 +51,7 @@ function AgroRentMenuHud:init()
 		end 
 	end 
 	
+	self.btnRent:clearOnClick();
 	self.btnRent:bindOnClick('Click', rentHandler);
 	
 	-- History Grid 
@@ -104,6 +105,7 @@ end
 
 function AgroRentMenuHud:updateRentGrid()
 	local data = {}
+	
 	for rentId, rent in pairs(AgroRentManager.Rents) do 
 		data[rentId] = {}
 		data[rentId]["Name"] = rent["Name"]
@@ -123,6 +125,7 @@ function AgroRentMenuHud:updateRentGrid()
 				end 
 			end 
 			
+			self.grdRentsButtons[rentId]:clearOnClick();
 			self.grdRentsButtons[rentId]:bindOnClick("unRentClick", onClickGiveBack);
 		end 
 				
@@ -143,6 +146,7 @@ function AgroRentMenuHud:onUnRentItem(rentId)
 end 
 
 function AgroRentMenuHud:onRentItem(item)
+  as.utils.printDebug("Player Rent Click");
 	AgroRentManager:rent(item);
 end 
 
@@ -179,6 +183,9 @@ function AgroRentMenuHud:onItemChange()
 end 
 
 function AgroRentMenuHud:show()
+  -- Forces the rents to reload
+  AgroRentManager:load();
+
 	self.visible = true;
 	self.cbCategories:show();
 	self.cbItems:show();
@@ -309,6 +316,7 @@ function AgroRentMenuHud:renderRentMenu()
 end
 
 function AgroRentMenuHud:deleteMap()	
+  --self.btnRent:clearOnClick();
 end;
 
 function AgroRentMenuHud:loadMap(name)

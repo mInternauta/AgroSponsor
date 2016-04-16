@@ -26,6 +26,7 @@ AgroButton.ButtonH = 0.04;
 
 function createButton(x, y)
 	local btn = {}
+	local btnIndex = x + y;
 	setmetatable(btn, AgroButton);
 		
 	btn:init();
@@ -129,7 +130,9 @@ function AgroButton:render()
 	end 
 end 
 
-function AgroButton:deleteMap()	
+function AgroButton:deleteMap()
+	 -- Removes the button events
+	 self:clearOnClick();
 end;
 
 function AgroButton:loadMap(name)
@@ -145,6 +148,10 @@ function AgroButton:keyEvent(unicode, sym, modifier, isDown)
 end 
 
 -- Events
+function AgroButton:clearOnClick()
+  self.clickEvents = {};
+end;
+
 function AgroButton:bindOnClick(id, func)
 	self.clickEvents[id] = func;
 end 

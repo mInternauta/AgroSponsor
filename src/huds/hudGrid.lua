@@ -34,7 +34,6 @@ function createGrid(x, y)
 	return grid;
 end 
 
-
 -- Functions
 function AgroGrid:init()
 	-- Grid Columns

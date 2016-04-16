@@ -28,6 +28,8 @@ AgroRentManager.percForExp = 0.002;
 function AgroRentManager:load()
 	AgroRentManager.ActivedRents = {};	
 	AgroRentManager.Rents = {};	
+	
+	as.utils.printDebug("Loading current savegame rents..")
 
 	local rentFile = AgroSponsor.saveGameDir .. '/asRents.data';
 	local data = {};
@@ -42,6 +44,14 @@ function AgroRentManager:load()
 		self.Rents = data;
 	end 
 end 
+
+function AgroRentManager:deleteSave()
+  local file = AgroSponsor.saveGameDir .. '/asRents.data';
+  
+  if fileExists(file) then
+      delete(file);
+  end 
+end
 
 -- Save the Rents Data 
 function AgroRentManager:save()
@@ -154,7 +164,7 @@ function AgroRentManager:rent(rentData)
 		-- Remove the Money from the Player 
 		g_client:getServerConnection():sendEvent(ASRewardEvent:new(-rentDailyValue))
 		
-		as.utils.print_r(self.Rents);
+	--	as.utils.print_r(self.Rents);
 		
 		-- Save the Rent to the List 	
 		self.Rents[rentID] = {};
@@ -162,6 +172,9 @@ function AgroRentManager:rent(rentData)
 		self.Rents[rentID]['Price'] = rentDailyValue;
 		self.Rents[rentID]['Expired'] = false;
 		self.Rents[rentID]['Name'] = rentData['Store']['brand'] .. " " .. rentData['Store']['name'];
+		
+		as.utils.printDebug("New rent: ");
+		as.utils.print_r(self.Rents[rentID]);
 		
 		self:save();
 		

@@ -97,6 +97,15 @@ function AgroSpManager:loadSponsor()
 	self.Sponsor = sponsor;
 end
 
+-- Delete the Sponsor File
+function AgroSpManager:deleteSave()
+  local sponsorFile = AgroSponsor.saveGameDir .. '/sponsor.data';
+  
+  if fileExists(sponsorFile) then
+      delete(sponsorFile);
+  end 
+end
+
 -- Save the sponsor to the savegame 
 function AgroSpManager:saveSponsor(sponsor)
 	if AgroSponsor:isGameSaved() then 

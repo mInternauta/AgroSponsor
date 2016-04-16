@@ -35,7 +35,6 @@ function createComboBox(x, y)
 	return cb;
 end 
 
-
 -- Functions
 function AgroComboBox:init()
 	-- Combo List 

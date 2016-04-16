@@ -120,6 +120,15 @@ function AgroPlayerProfile:load()
 	self.Profile = player;
 end 
 
+function AgroPlayerProfile:deleteSave()
+  local file = AgroSponsor.saveGameDir .. '/asPlayer.data';
+  
+  if fileExists(file) then
+      delete(file);
+  end 
+end
+
+
 -- Save the Player Profile 
 function AgroPlayerProfile:save()
 	if AgroSponsor:isGameSaved() then 
