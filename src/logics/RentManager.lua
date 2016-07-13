@@ -20,7 +20,7 @@ AgroRentManager.Rents = {}
 AgroRentManager.percFromPrice = 0.028;
 AgroRentManager.percDescFromSponship = 0.015;
 AgroRentManager.percFromUpkeep = 0.03;
-AgroRentManager.percForExp = 0.002;
+AgroRentManager.percForExp = 0.0018;
 
 --source(AgroSponsor.ModInstallDir .. 'netevents/ASRemoveRentEvent.lua')
 
@@ -214,13 +214,11 @@ function AgroRentManager:create(storeId)
 			dailyPrice = dailyPrice - descPrice;
 		end 
 		
-		dailyPrice = dailyPrice - (21 * AgroPlayerProfile:getLevel());
-		
+		dailyPrice = dailyPrice - (21 * AgroPlayerProfile:getLevel());		
 		dailyPrice = math.ceil(dailyPrice);		
 		
 		local expPoints = dailyPrice * AgroRentManager.percForExp;
-		expPoints = (0.5 * AgroPlayerProfile:getLevel());
-		
+		expPoints = expPoints + (AgroPlayerProfile:getLevel() * 0.3);
 		expPoints = math.ceil(expPoints);
 		
 		rentItem["Store"] = storeItem;
